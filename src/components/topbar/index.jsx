@@ -40,7 +40,7 @@ function Topbar() {
   const pages = [
     { title: 'About', link: '/about-us' },
     { title: 'Contact', link: '/contact' },
-    { title: 'Announcements', link: '/announcemnts' },
+    { title: 'Announcements', link: '/announcements' },
     { title: 'Results', link: '/results' },
     { title: 'Online Tests', link: '/demo-tests' },
   ];

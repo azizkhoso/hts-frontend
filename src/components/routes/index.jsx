@@ -26,6 +26,7 @@ import LoadingSplashScreen from './LoadingSplashScreen';
 
 const About = lazy(() => import('../about'));
 const Contact = lazy(() => import('../contact'));
+const Announcements = lazy(() => import('../announcements'));
 const DemoTests = lazy(() => import('../demo-tests'));
 const Faq = lazy(() => import('../faq'));
 const Login = lazy(() => import('../login'));
@@ -55,6 +56,14 @@ export default function AppRoutes() {
                 element={(
                   <Suspense fallback={<LoadingSplashScreen />}>
                     <Contact />
+                  </Suspense>
+                )}
+              />
+              <Route
+                path="/announcements/*"
+                element={(
+                  <Suspense fallback={<LoadingSplashScreen />}>
+                    <Announcements />
                   </Suspense>
                 )}
               />
