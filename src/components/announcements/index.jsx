@@ -21,7 +21,7 @@ function Announcemnts() {
   const announcements = [
     { title: 'Announcement 1', details: 'The details are here', link: '/link-to-ann' },
     { title: 'Announcement 2', details: 'The details are here', link: '/link-to-ann' },
-    { title: 'Announcement 3', details: 'The details are here', link: '/link-to-ann' },
+    { title: 'Announcement 3', details: 'The details are here', link: '' },
   ]
   return (
     <div className="landing-page">
@@ -36,14 +36,23 @@ function Announcemnts() {
       </Container>
       <Container maxWidth="lg" className="stack">
         {
+          announcements.length === 0 && (
+            <Typography align="center">No announcements yet</Typography>
+          )
+        }
+        {
           announcements.map((ann) => (
             <Accordion key={nanoid()}>
               <AccordionSummary expandIcon={<ExpandMore />}>{ann.title}</AccordionSummary>
               <AccordionDetails className="stack bg-gray-100">
                 {ann.details}
-                <Link to={ann.link}>
-                  <Typography color="primary" className="mt-3">View More</Typography>
-                </Link>
+                {
+                  ann.link && (
+                    <Link to={ann.link}>
+                      <Typography color="primary" className="mt-3">View More</Typography>
+                    </Link>
+                  )
+                }
               </AccordionDetails>
             </Accordion>
           ))
