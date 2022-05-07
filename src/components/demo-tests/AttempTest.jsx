@@ -23,6 +23,8 @@ import { addErrorToast } from '../../redux/actions/toasts';
 import Question from '../student/AttemptTest/Question';
 import TestResult from '../student/AttemptTest/TestResult';
 
+import styles from './DemoTests.module.css';
+
 function AttempTest() {
   const { _id } = useParams();
   const [test, setTest] = React.useState({});
@@ -48,15 +50,23 @@ function AttempTest() {
   if (isLoading) return <div className="page-pre-loader"><CircularProgress /></div>;
   return (
     <div className="block">
-      <Typography variant="h6" color="primary" align="center">{test.title}</Typography>
-      <Container maxWidth="xl">
-        <div className="flex flex-wrap my-3">
-          <Typography variant="h6" className="w-1/2 lg:w-2/6">Subject</Typography>
-          <Typography variant="body1" className="w-1/2 lg:w-4/6">{test.subject}</Typography>
-          <Typography variant="h6" className="w-1/2 lg:w-2/6">Total Questions</Typography>
-          <Typography variant="body1" className="w-1/2 lg:w-4/6">{test?.questions?.length}</Typography>
-          <Typography variant="h6" className="w-1/2 lg:w-2/6">Created by</Typography>
-          <Typography variant="body1" className="w-1/2 lg:w-4/6">{test.createdBy}</Typography>
+      <Container maxWidth="xl" className="my-6">
+        <div className="stack border-2 border-primary">
+          <Typography variant="h4" className="bg-primary text-center p-6 text-white">{test.title}</Typography>
+          <div className="stack p-3">
+            <div className={styles.record}>
+              <Typography variant="h6" color="primary" className={styles['record-item-name']}>Subject:</Typography>
+              <Typography variant="h6" className={styles['record-item-value']}>{test?.subject}</Typography>
+            </div>
+            <div className={styles.record}>
+              <Typography variant="h6" color="primary" className={styles['record-item-name']}>Total Questions:</Typography>
+              <Typography variant="h6" className={styles['record-item-value']}>{test?.questions?.length}</Typography>
+            </div>
+            <div className={styles.record}>
+              <Typography variant="h6" color="primary" className={styles['record-item-name']}>Created By:</Typography>
+              <Typography variant="h6" className={styles['record-item-value']}>{test.createdBy}</Typography>
+            </div>
+          </div>
         </div>
         <div className="w-full mx-auto">
           { // Question Component

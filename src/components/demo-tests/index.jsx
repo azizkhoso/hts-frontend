@@ -61,7 +61,7 @@ function DemoTests() {
   React.useEffect(() => {
     navigate(`?${queryString.stringify(filter)}`);
     refetch(filter);
-  }, [filter]);
+  }, [filter, navigate, refetch]);
   return (
     <Routes>
       <Route

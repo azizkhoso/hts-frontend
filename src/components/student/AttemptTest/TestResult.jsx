@@ -17,6 +17,7 @@ import { submitTest } from '../../../api/student';
 import { addErrorToast, addSuccessToast } from '../../../redux/actions/toasts';
 
 import styles from './AttemptTest.module.css';
+import { mapNumberToGrade } from '../../../utils';
 
 function calculateTotalCorrect(questions, answers) {
   let correct = 0;
@@ -28,6 +29,15 @@ function calculateTotalCorrect(questions, answers) {
   }
   return correct;
 }
+
+const grades = [
+  { name: 'A', value: '4, 5' },
+  { name: 'B', value: '3, <=4' },
+  { name: 'C', value: '2, <=3' },
+  { name: 'D', value: '1, <=2' },
+  { name: 'E', value: '0, <=1' },
+  { name: 'F', value: '<=0' },
+]
 
 function TestResult({ questions, answers, testId }) {
   const { student } = useSelector((state) => state.account);
@@ -53,14 +63,41 @@ function TestResult({ questions, answers, testId }) {
   }, []);
   return (
     <>
-      <Typography variant="h6" align="center" color="primary" className="w-full">Results</Typography>
-      <div className={styles.record}>
-        <Typography variant="h6" color="primary" className={styles['record-item-name']}>Total Questions:</Typography>
-        <Typography variant="h6" className={styles['record-item-value']}>{questions.length}</Typography>
-      </div>
-      <div className={styles.record}>
-        <Typography variant="h6" color="primary" className={styles['record-item-name']}>Correct:</Typography>
-        <Typography variant="h6" className={styles['record-item-value']}>{calculateTotalCorrect(questions, answers)}</Typography>
+      <div className="stack border-2 border-primary">
+        <Typography variant="h4" className="bg-primary text-center p-6 text-white">Result</Typography>
+        <div className="stack p-3">
+          <div className={styles.record}>
+            <Typography variant="h6" color="primary" className={styles['record-item-name']}>Total Questions:</Typography>
+            <Typography variant="h6" className={styles['record-item-value']}>{questions.length}</Typography>
+          </div>
+          <div className={styles.record}>
+            <Typography variant="h6" color="primary" className={styles['record-item-name']}>Correct:</Typography>
+            <Typography variant="h6" className={styles['record-item-value']}>{calculateTotalCorrect(questions, answers)}</Typography>
+          </div>
+          <div className={styles.record}>
+            <Typography variant="h6" color="primary" className={styles['record-item-name']}>Grade:</Typography>
+            <Typography variant="h6" className={styles['record-item-value']}>
+              {
+                mapNumberToGrade(
+                  5 * Number(calculateTotalCorrect(questions, answers) / questions.length).toFixed(2)
+                )
+              }
+            </Typography>
+          </div>
+        </div>
+        <Typography variant="h6" className="text-white my-3 bg-primary text-center p-3">Grades Mapping</Typography>
+        <div className="stack p-3">
+          <div className="row gap-6 justify-center items-center">
+            {
+              grades.map((g) => (
+                <div className="stack gap-2 text-center">
+                  <p className="text-3xl font-bold text-primary">{g.name}</p>
+                  <p className="text-lg">{g.value}</p>
+                </div>
+              ))
+            }
+          </div>
+        </div>
       </div>
       {
         isLoading && (
