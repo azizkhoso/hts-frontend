@@ -4,7 +4,6 @@ import {
   BrowserRouter,
   Routes,
   Route,
-  Navigate,
 } from 'react-router-dom';
 
 import {
@@ -17,8 +16,9 @@ import Topbar from '../topbar';
 import Home from '../home';
 import Toasts from '../toasts';
 import NotFound from '../NotFound';
-/* import Student from '../student';
-import Teacher from '../teacher'; */
+import Results from '../Results';
+import Student from '../student';
+/* import Teacher from '../teacher'; */
 
 import ErrorBoundary from '../ErrorBoundary';
 import Footer from '../footer';
@@ -84,6 +84,14 @@ export default function AppRoutes() {
                 )}
               />
               <Route
+                path="/results/*"
+                element={(
+                  <Suspense fallback={<LoadingSplashScreen />}>
+                    <Results />
+                  </Suspense>
+                )}
+              />
+              <Route
                 path="/login/*"
                 element={(
                   <Suspense fallback={<LoadingSplashScreen />}>
@@ -107,10 +115,16 @@ export default function AppRoutes() {
                   </Suspense>
                 )}
               />
-              {/* <Route path="/student/*" element={<Student />} />
-              <Route path="/teacher/*" element={<Teacher />} /> */}
-              <Route path="/not-found/*" element={<NotFound />} />
-              <Route path="*" element={<Navigate replace to="/not-found" />} />
+              <Route
+                path="/student/*"
+                element={(
+                  <Suspense fallback={<LoadingSplashScreen />}>
+                    <Student />
+                  </Suspense>
+                )}
+              />
+              { /* <Route path="/teacher/*" element={<Teacher />} /> */}
+              <Route path="*" element={<NotFound />} />
             </Routes>
             <Footer />
           </ErrorBoundary>
