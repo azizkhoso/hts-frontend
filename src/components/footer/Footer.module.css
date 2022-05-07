@@ -1,0 +1,24 @@
+.container {
+  background-color: #7BAED0;
+  /* Default */
+  @apply
+  text-white
+  mt-auto
+  py-6
+}
+
+.content {
+  @apply
+    /* Default */
+    justify-between
+    gap-6
+    row
+}
+
+.brand-and-links {
+  @apply
+    /* Default */
+    flex
+    items-center
+    gap-3
+}

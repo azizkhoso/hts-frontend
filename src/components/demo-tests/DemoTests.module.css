@@ -1,0 +1,18 @@
+.filter {
+  @apply
+    /* Default */
+    flex
+    flex-wrap
+    items-center
+    gap-3
+    my-3
+}
+
+.cards-container {
+  @apply
+    /* Default */
+    flex
+    flex-wrap
+    justify-center
+    gap-6
+}

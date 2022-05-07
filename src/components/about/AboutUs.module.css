@@ -1,0 +1,61 @@
+.header {
+  min-height: '200px';
+  @apply
+    /* Default */
+    px-3
+    my-6
+    flex
+    flex-col
+}
+
+.header-heading {
+  @apply
+    /* Default */
+    w-full
+    mt-auto
+    font-bold
+    text-center
+}
+
+.header-paragraph {
+  @apply
+    /* Default */
+    w-full
+    mb-auto
+    text-center
+}
+
+.content-container {
+  @apply
+    /* Default */
+    flex
+    flex-col
+    items-center
+    gap-9
+    p-6
+}
+
+.card {
+  @apply
+    /* Default */
+    p-6
+    bg-white
+}
+
+.heading {
+  @apply
+    /* Default */
+    w-full
+    mt-auto
+    mb-4
+    font-bold
+    text-center
+    text-xl
+    text-secondary
+}
+
+.content {
+  @apply
+    /* Default */
+    text-center
+}

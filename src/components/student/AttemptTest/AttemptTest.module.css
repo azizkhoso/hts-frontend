@@ -1,0 +1,26 @@
+.record {
+  @apply
+    /* Default */
+    flex
+    flex-wrap
+    w-full
+}
+
+.record-item-name {
+  @apply
+    /* Default */
+    w-full
+    /* Responsive */
+    md:w-1/2
+    lg:w-3/12
+}
+
+.record-item-value {
+  @apply
+    /* Default */
+    w-full
+    capitalize
+    /* Responsive */
+    md:w-1/2
+    lg:w-9/12
+}
