@@ -14,6 +14,8 @@ import 'react-alice-carousel/lib/alice-carousel.css';
 
 import moment from 'moment';
 
+import ImportantAnnouncementsDialog from './ImportantAnnouncementsDialog';
+
 import futureBeginsHere from '../../assets/future-begins-here.png';
 import qualityTests from '../../assets/quality-tests.jpg';
 import excellence from '../../assets/excellence.jpeg';
@@ -23,14 +25,13 @@ import leadership from '../../assets/leadership.png';
 
 import styles from './Home.module.css';
 
-function Home() {
   const slides = [
     { title: 'Future Begins Here', image: futureBeginsHere },
     { title: 'Quality Tests Easily Accessible', image: qualityTests },
     { title: 'Pride of Excellence', image: excellence },
   ];
   const results = [
-    {
+    /* {
       title: 'English Test Class XII - Lesson 3',
       subject: 'English',
       date: new Date(),
@@ -47,13 +48,15 @@ function Home() {
       subject: 'English',
       date: new Date(),
       link: '/results/3',
-    },
+    }, */
   ];
   const services = [
     { title: 'Learning Excellence', icon: learningExcellence, description: 'Education is a commitment to excellence in Teaching and Learning' },
     { title: 'Exemplary Community', icon: community, description: 'We have an exemplary learning community and champions of our success' },
     { title: 'Empowered Student', icon: leadership, description: 'We make sure every student is inspired, challenged and empowered' },
   ];
+
+function Home() {
   return (
     <div className="home">
       <div className="w-full stack">
@@ -76,6 +79,11 @@ function Home() {
         />
         <Typography variant="h4" className="text-center my-7">Results</Typography>
         <Container maxWidth="xl" className={styles['results-container']}>
+          {
+            results.length === 0 && (
+              <Typography align="center">No results yet</Typography>
+            )
+          }
           {
             results.map((item) => (
               <Card key={`${item.title}-${item.subject}`} className="px-4 stack" style={{ maxWidth: '230px' }}>
@@ -110,6 +118,7 @@ function Home() {
           </Container>
         </div>
       </div>
+      <ImportantAnnouncementsDialog />
     </div>
   );
 }

@@ -18,6 +18,7 @@ import Sidebar from './sidebar';
 import Tests from './Tests';
 import Students from './Students';
 import Teachers from './Teachers';
+import Announcements from './Announcements';
 
 export default function Admin() {
   const [openDrawer, setOpenDrawer] = React.useState(false);
@@ -40,7 +41,7 @@ export default function Admin() {
           <Routes>
             <Route index element={<Navigate replace to="dashboard" />} />
             <Route path="/dashboard" element={<h1>Admin dashboard</h1>} />
-            <Route path="/announcements" element={<h1>Admin Announcements</h1>} />
+            <Route path="/announcements/*" element={<Announcements />} />
             <Route path="/students/*" element={<Students />} />
             <Route path="/teachers/*" element={<Teachers />} />
             <Route path="/profile" element={<h1>Admin profile</h1>} />

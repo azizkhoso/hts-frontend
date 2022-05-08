@@ -23,6 +23,18 @@ admin.interceptors.request.use((config) => {
   return updated;
 });
 
+export function getAnnouncements() {
+  return admin.get('/announcements');
+}
+
+export function newAnnouncement(data) {
+  return admin.post('/announcements', data);
+}
+
+export function deleteAnnouncement(_id) {
+  return admin.delete(`/announcements/${_id}`);
+}
+
 export function getTests() {
   return admin.get('/tests');
 }

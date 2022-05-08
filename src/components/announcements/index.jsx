@@ -6,7 +6,7 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  // Button,
+  CircularProgress,
 } from '@mui/material';
 
 import { ExpandMore } from '@mui/icons-material';
@@ -15,14 +15,24 @@ import { Link } from 'react-router-dom';
 
 import { nanoid } from 'nanoid';
 
+import { useDispatch } from 'react-redux';
+
+import { useQuery } from 'react-query';
+import { getAnnouncements } from '../../api/others';
+
+import { addErrorToast } from '../../redux/actions/toasts';
+
 import styles from './Announcements.module.css';
 
 function Announcemnts() {
-  const announcements = [
-    { title: 'Announcement 1', details: 'The details are here', link: '/link-to-ann' },
-    { title: 'Announcement 2', details: 'The details are here', link: '/link-to-ann' },
-    { title: 'Announcement 3', details: 'The details are here', link: '' },
-  ]
+  const dispatch = useDispatch();
+  const [announcements, setAnnouncements] = React.useState([]);
+  const { isLoading } = useQuery('allAnnouncements', getAnnouncements, {
+    onSuccess: (r) => setAnnouncements(r.data.announcements),
+    onError: (err) => dispatch(
+      addErrorToast({ message: err.response?.data?.error || err.message }),
+    ),
+  })
   return (
     <div className="landing-page">
       <Container maxWidth="lg" className={styles.header}>
@@ -36,15 +46,22 @@ function Announcemnts() {
       </Container>
       <Container maxWidth="lg" className="stack">
         {
-          announcements.length === 0 && (
+          isLoading && (
+            <div className="flex w-full">
+              <CircularProgress className="m-auto" />
+            </div>
+          )
+        }
+        {
+          !isLoading && announcements.length === 0 && (
             <Typography align="center">No announcements yet</Typography>
           )
         }
         {
-          announcements.map((ann) => (
+          !isLoading && announcements.map((ann) => (
             <Accordion key={nanoid()}>
               <AccordionSummary expandIcon={<ExpandMore />}>{ann.title}</AccordionSummary>
-              <AccordionDetails className="stack bg-gray-100">
+              <AccordionDetails className="bg-gray-100 stack">
                 {ann.details}
                 {
                   ann.link && (
