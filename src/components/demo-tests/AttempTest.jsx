@@ -41,16 +41,17 @@ function AttempTest() {
   const [index, setIndex] = React.useState(0);
   const [answers, setAnswers] = React.useState([]);
   React.useEffect(() => function () {
-    if (confirm('Are you sure you want to leave?')) {
+    /* if (confirm('Are you sure you want to leave?')) {
       // navigate('');
     } else {
       navigate('');
-    }
+    } */
+    return () => confirm('Are you sure you want to leave?') && navigate('');
   }, []);
   if (isLoading) return <div className="page-pre-loader"><CircularProgress /></div>;
   return (
     <div className="block">
-      <Container maxWidth="xl" className="my-6">
+      <Container maxWidth="md" className="my-6">
         <div className="stack border-2 border-primary">
           <Typography variant="h4" className="bg-primary text-center p-6 text-white">{test.title}</Typography>
           <div className="stack p-3">

@@ -10,6 +10,11 @@ import {
   Select,
   MenuItem,
   TextField,
+  FormControlLabel,
+  Radio,
+  FormControl,
+  RadioGroup,
+  FormLabel,
 } from '@mui/material';
 
 function Question({
@@ -50,60 +55,38 @@ function Question({
         )&nbsp;
         {question.statement}
       </Typography>
-      <img src={question.image} alt="preview" className="self-center w-full max-w-xs" />
+      <img src={question.image} alt="preview" className="self-center w-full max-w-xs my-6" />
       {
         question.type === 'MCQS' && (
           <>
-            <Typography variant="body2">
-              A:&nbsp;
-              {question.A}
-            </Typography>
-            <Typography variant="body2">
-              B:&nbsp;
-              {question.B}
-            </Typography>
-            <Typography variant="body2">
-              C:&nbsp;
-              {question.C}
-            </Typography>
-            <Typography variant="body2">
-              D:&nbsp;
-              {question.D}
-            </Typography>
-            <div className="flex items-center w-full gap-1 md:w-auto">
-              <Typography variant="h6">Your answer:</Typography>
-              <Select
-                variant="standard"
-                className="self-center flex-grow md:flex-grow-0"
-                size="small"
-                name="answer"
+            <FormControl>
+              <FormLabel>Your Answer:</FormLabel>
+              <RadioGroup
                 value={answer}
                 onChange={(e) => setAnswer(e.target.value)}
               >
-                <MenuItem value="A">A</MenuItem>
-                <MenuItem value="B">B</MenuItem>
-                <MenuItem value="C">C</MenuItem>
-                <MenuItem value="D">D</MenuItem>
-              </Select>
-            </div>
+                <FormControlLabel label={`A: ${question.A}`} value="A" control={<Radio />} />
+                <FormControlLabel label={`B: ${question.B}`} value="B" control={<Radio />} />
+                <FormControlLabel label={`C: ${question.C}`} value="C" control={<Radio />} />
+                <FormControlLabel label={`D: ${question.D}`} value="D" control={<Radio />} />
+              </RadioGroup>
+            </FormControl>
           </>
         )
       }
       {
         question.type === 'TrueFalse' && (
           <div className="flex items-center w-full gap-1 md:w-auto">
-            <Typography variant="h6">Your answer:</Typography>
-            <Select
-              variant="standard"
-              className="self-center flex-grow md:flex-grow-0"
-              size="small"
-              name="answer"
-              value={answer}
-              onChange={(e) => setAnswer(e.target.value)}
-            >
-              <MenuItem value="True">True</MenuItem>
-              <MenuItem value="False">False</MenuItem>
-            </Select>
+            <FormControl>
+              <FormLabel>Your Answer:</FormLabel>
+              <RadioGroup
+                value={answer}
+                onChange={(e) => setAnswer(e.target.value)}
+              >
+                <FormControlLabel label="True" value="True" control={<Radio />} />
+                <FormControlLabel label="False" value="False" control={<Radio />} />
+              </RadioGroup>
+            </FormControl>
           </div>
         )
       }
@@ -112,8 +95,9 @@ function Question({
           <div className="flex items-center w-full gap-1 md:w-auto">
             <Typography variant="h6">Your answer:</Typography>
             <TextField
-              variant="standard"
-              className="flex-grow"
+              variant="outlined"
+              size="small"
+              className="w-1/2"
               value={answer}
               onChange={(e) => setAnswer(e.target.value)}
             />

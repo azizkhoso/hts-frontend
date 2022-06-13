@@ -67,7 +67,7 @@ export function updateTest(data) {
   fd.append('subject', data.subject);
   fd.append('startsAt', data.startsAt);
   fd.append('submittableBefore', data.submittableBefore);
-  fd.append('isDemo', Boolean(data.isDemo));
+  fd.append('isDemo', data.isDemo === 'true');
   fd.append('qualification', data.qualification);
   fd.append('questions', JSON.stringify(data.questions));
   data.questions.forEach((q) => typeof q.image === 'object' && fd.append('images', q.image));

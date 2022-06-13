@@ -69,7 +69,7 @@ function DemoTests() {
         element={(
           <div className="block">
             <Typography variant="h6" color="primary" align="center">Demo Tests</Typography>
-            <Container maxWidth="xl">
+            <Container maxWidth="md">
               <div className={styles.filter}>
                 <Typography variant="h6">Filter</Typography>
                 <span className="flex-grow w-full md:w-auto" />
