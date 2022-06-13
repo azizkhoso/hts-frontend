@@ -12,14 +12,22 @@ import {
   Menu,
 } from '@mui/icons-material';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../../redux/actions/account';
+
+import * as utils from '../../utils';
 
 import Sidebar from './sidebar';
 import Tests from './Tests';
 
 export default function Student() {
   const [openDrawer, setOpenDrawer] = React.useState(false);
+  const dispatch = useDispatch();
   const { student } = useSelector((state) => state.account);
+  function handleLogout() {
+    utils.removeToken();
+    dispatch(logout());
+  }
   if (!student) return <Navigate replace to="/login/student" />;
   return (
     <div className="flex flex-col md:flex-row">
@@ -30,7 +38,7 @@ export default function Student() {
             <Menu />
           </IconButton>
           <Typography variant="h5" align="center" className="w-full">{student.fullName}</Typography>
-          <IconButton>
+          <IconButton onClick={() => handleLogout()}>
             <Logout />
           </IconButton>
         </div>

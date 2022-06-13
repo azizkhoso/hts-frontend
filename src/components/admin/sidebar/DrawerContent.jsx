@@ -24,6 +24,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import logo from '../../../assets/logo.png';
 import student from '../../../assets/student.png';
 import teacher from '../../../assets/teacher.png';
+import request from '../../../assets/request.svg';
 
 export default function DrawerContent({ handleClose }) {
   const navigate = useNavigate();
@@ -53,6 +54,11 @@ export default function DrawerContent({ handleClose }) {
       title: 'Tests',
       link: '/admin/tests',
       icon: <Quiz />,
+    },
+    {
+      title: 'Test Applications',
+      link: '/admin/test-applications',
+      icon: <img src={request} alt="teacher" className="w-6 h-6" />,
     },
     {
       title: 'Profile',

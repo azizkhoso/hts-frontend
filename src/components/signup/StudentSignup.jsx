@@ -14,7 +14,7 @@ import {
   CircularProgress,
 } from '@mui/material';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 
@@ -29,10 +29,14 @@ import logo from '../../assets/logo.png';
 
 export default function StudentSignup() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { isLoading, mutate } = useMutation(
     (data) => signupStudent(data),
     {
-      onSuccess: () => dispatch(addSuccessToast({ message: 'Student registered successfully' })),
+      onSuccess: () => {
+        dispatch(addSuccessToast({ message: 'Student registered successfully' }));
+        navigate('/login');
+      },
       onError: (err) => dispatch(
         addErrorToast({ message: err.response?.data?.error || err.message }),
       ),

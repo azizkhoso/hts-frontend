@@ -35,4 +35,15 @@ export function submitTest(data) {
   return student.post('/submissions', data);
 }
 
+export function applyForTest(data) {
+  const fd = new FormData();
+  fd.append('test', data.test);
+  fd.append('image', data.image);
+  return student.post('/test-application', fd, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    }
+  });
+}
+
 export default student;

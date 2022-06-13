@@ -43,9 +43,9 @@ export default function ImportantAnnouncementsDialog() {
               <Typography variant="body1">{ann.details}</Typography>
               {
                 ann.link && (
-                  <Link to={ann.link}>
+                  <a href={ann.link}>
                     <Typography className="font-semibold" color="primary">View More</Typography>
-                  </Link>
+                  </a>
                 )
               }
             </div>

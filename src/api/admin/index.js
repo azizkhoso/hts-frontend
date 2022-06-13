@@ -82,4 +82,12 @@ export function deleteTest(_id) {
   return admin.delete(`/tests/${_id}`);
 }
 
+export function getTestApplications(testId){
+  return admin.get(`/test-applications/${testId}`);
+}
+
+export function updateTestApplications(data = { _id: 'undefined', approved: false }){
+  return admin.put(`/test-applications/`, data);
+}
+
 export default admin;

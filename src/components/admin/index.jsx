@@ -12,15 +12,17 @@ import {
   Menu,
 } from '@mui/icons-material';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Sidebar from './sidebar';
 import Tests from './Tests';
 import Students from './Students';
 import Teachers from './Teachers';
 import Announcements from './Announcements';
+import TestApplications from './TestApplications';
 
 export default function Admin() {
+  const dispatch = useDispatch();
   const [openDrawer, setOpenDrawer] = React.useState(false);
   const { account } = useSelector((s) => s);
   if (!account.admin) return <Navigate replace to="/login/admin" />;
@@ -33,7 +35,7 @@ export default function Admin() {
             <Menu />
           </IconButton>
           <Typography variant="h5" className="flex items-center justify-center flex-grow">Admin</Typography>
-          <IconButton>
+          <IconButton onClick={() => dispatch({ type: 'LOGOUT' })}>
             <Logout />
           </IconButton>
         </div>
@@ -46,6 +48,7 @@ export default function Admin() {
             <Route path="/teachers/*" element={<Teachers />} />
             <Route path="/profile" element={<h1>Admin profile</h1>} />
             <Route path="/tests/*" element={<Tests />} />
+            <Route path="/test-applications/*" element={<TestApplications />} />
           </Routes>
         </div>
       </section>

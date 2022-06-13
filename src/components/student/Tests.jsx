@@ -29,11 +29,14 @@ import { getTests } from '../../api/student';
 
 import { addErrorToast } from '../../redux/actions/toasts';
 import AttemptTest from './AttemptTest';
+import TestApplicationDialog from './TestApplicationDialog';
 
 export default function Tests() {
   const student = useSelector((state) => state.account.student);
   const dispatch = useDispatch();
   const [tests, setTests] = React.useState([]);
+  const [selectedTest, setSelectedTest] = React.useState({});
+  const [openDialog, setOpenDialog] = React.useState(false);
   const { isLoading } = useQuery(['tests', student._id], getTests, {
     onSuccess: ({ data }) => setTests(data.tests),
     onError: (err) => dispatch(
@@ -74,8 +77,9 @@ export default function Tests() {
                         <TableCell align="center" style={{ minWidth: '100px' }}>
                           {date.format(new Date(test.submittableBefore), 'DD-MMM-YYYY hh:mm A')}
                         </TableCell>
-                        <TableCell align="center">{test.qualification}</TableCell>
+                        <TableCell align="center">{test.createdBy}</TableCell>
                         <TableCell align="center">
+                          <Button variant="text" color="primary" onClick={() => { setOpenDialog(true); setSelectedTest(test) }}>Apply</Button>
                           <Link to={`../../tests/${test._id}`}>
                             <Button variant="text" color="primary">Attempt</Button>
                           </Link>
@@ -86,6 +90,11 @@ export default function Tests() {
                 </TableBody>
               </Table>
             </TableContainer>
+            {
+              openDialog && (
+                <TestApplicationDialog open={openDialog} handleClose={() => setOpenDialog(false)} test={selectedTest} />
+              )
+            }
           </div>
         )}
       />

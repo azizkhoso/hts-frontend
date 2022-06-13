@@ -14,6 +14,11 @@ export function getToken() {
   return part1 + part2;
 }
 
+export function removeToken() {
+  sessionStorage.removeItem('_a_');
+  sessionStorage.removeItem('_z_');
+}
+
 /**
  * 
  * @param {Number} number Number from 1 to 5
