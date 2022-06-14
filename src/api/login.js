@@ -7,6 +7,20 @@ const login = axios.create({
   },
 });
 
+/**
+ * Verify login function takes token and returns user object
+ * @param {String} token 
+ * @returns {Promise}
+ */
+
+export function verifyLogin(token) {
+  return login.get('/verify', {
+    headers: {
+      authorization: `Bearer ${token}`,
+    }
+  });
+}
+
 export function loginAdmin(data) {
   return login.post('/admin', data);
 }

@@ -9,8 +9,8 @@ const instance = axios.create({
  * 
  * @param {Boolean} isImportant Fetch only important announcements if true
  */
-export function getAnnouncements(isImportant = false) {
-  return instance.get(`/announcements${isImportant && '?isImportant=true'}`);
+export function getAnnouncements(isImportant) {
+  return instance.get(`/announcements${isImportant ? '?isImportant=true' : ''}`);
 }
 
 export function getDemoTests(values) {

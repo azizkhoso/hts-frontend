@@ -15,8 +15,6 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../redux/actions/account';
 
-import * as utils from '../../utils';
-
 import Sidebar from './sidebar';
 import Tests from './Tests';
 
@@ -25,7 +23,7 @@ export default function Student() {
   const dispatch = useDispatch();
   const { student } = useSelector((state) => state.account);
   function handleLogout() {
-    utils.removeToken();
+    localStorage.removeItem('hts-token');
     dispatch(logout());
   }
   if (!student) return <Navigate replace to="/login/student" />;

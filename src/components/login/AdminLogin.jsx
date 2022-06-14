@@ -35,7 +35,7 @@ export default function AdminLogin() {
     {
       onSuccess: ({ data }) => {
         dispatch(login(data));
-        utils.saveToken(data.token);
+        localStorage.setItem('hts-token', data.token);
       },
       onError: (err) => dispatch(
         addErrorToast({ message: err.response?.data?.error || err.message }),

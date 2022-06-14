@@ -35,7 +35,7 @@ export default function Admin() {
             <Menu />
           </IconButton>
           <Typography variant="h5" className="flex items-center justify-center flex-grow">Admin</Typography>
-          <IconButton onClick={() => dispatch({ type: 'LOGOUT' })}>
+          <IconButton onClick={() => {dispatch({ type: 'LOGOUT' }); localStorage.removeItem('hts-token')}}>
             <Logout />
           </IconButton>
         </div>

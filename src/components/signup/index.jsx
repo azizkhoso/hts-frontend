@@ -14,7 +14,7 @@ import StudentSignup from './StudentSignup';
 
 export default function SignUp() {
   return (
-    <Grid container flexDirection="column" justifyContent="center" alignItems="center" className="min-h-full">
+    <Grid container flexDirection="column" justifyContent="center" alignItems="center" className="min-h-full p-6">
       <Grid container item maxWidth="sm">
         <Routes>
           <Route index element={<Navigate replace to="/signup/student" />} />

@@ -11,10 +11,6 @@ import {
 
 import { ExpandMore } from '@mui/icons-material';
 
-import { Link } from 'react-router-dom';
-
-import { nanoid } from 'nanoid';
-
 import { useDispatch } from 'react-redux';
 
 import { useQuery } from 'react-query';
@@ -27,7 +23,7 @@ import styles from './Announcements.module.css';
 function Announcemnts() {
   const dispatch = useDispatch();
   const [announcements, setAnnouncements] = React.useState([]);
-  const { isLoading } = useQuery('allAnnouncements', getAnnouncements, {
+  const { isLoading } = useQuery('allAnnouncements', () => getAnnouncements(), {
     onSuccess: (r) => setAnnouncements(r.data.announcements),
     onError: (err) => dispatch(
       addErrorToast({ message: err.response?.data?.error || err.message }),
@@ -37,7 +33,7 @@ function Announcemnts() {
     <div className="landing-page">
       <Container maxWidth="lg" className={styles.header}>
         <Typography
-          variant="h2"
+          variant="h4"
           color="primary"
           className={styles['header-heading']}
         >
@@ -59,15 +55,18 @@ function Announcemnts() {
         }
         {
           !isLoading && announcements.map((ann) => (
-            <Accordion key={nanoid()}>
-              <AccordionSummary expandIcon={<ExpandMore />}>{ann.title}</AccordionSummary>
+            <Accordion key={ann._id}>
+              <AccordionSummary expandIcon={<ExpandMore />}>
+                {ann.isImportant && <b>Important:&nbsp;</b>}
+                {ann.title}
+              </AccordionSummary>
               <AccordionDetails className="bg-gray-100 stack">
                 {ann.details}
                 {
                   ann.link && (
-                    <Link to={ann.link}>
+                    <a href={ann.link}>
                       <Typography color="primary" className="mt-3">View More</Typography>
-                    </Link>
+                    </a>
                   )
                 }
               </AccordionDetails>

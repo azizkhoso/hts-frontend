@@ -220,7 +220,7 @@ export default function UpdateTest() {
                 className="w-full sm:w-60"
                 name="startsAt"
                 onChange={formik.handleChange}
-                value={date.format(new Date(formik.values.startsAt), 'YYYY-MM-DDThh:mm')}
+                value={date.format(new Date(formik.values.startsAt), 'YYYY-MM-DDTHH:mm')}
                 error={formik.touched.startsAt && formik.errors.startsAt}
                 helperText={formik.touched && formik.errors.startsAt}
               />
@@ -237,7 +237,7 @@ export default function UpdateTest() {
                 className="w-full sm:w-60"
                 name="submittableBefore"
                 onChange={formik.handleChange}
-                value={date.format(new Date(formik.values.submittableBefore), 'YYYY-MM-DDThh:mm')}
+                value={date.format(new Date(formik.values.submittableBefore), 'YYYY-MM-DDTHH:mm')}
                 error={formik.touched.submittableBefore && formik.errors.submittableBefore}
                 helperText={formik.touched && formik.errors.submittableBefore}
               />

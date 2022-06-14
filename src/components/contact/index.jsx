@@ -15,7 +15,7 @@ function Contact() {
     <div className="landing-page">
       <Container disableGutters maxWidth="false" className={styles.header}>
         <Typography
-          variant="h2"
+          variant="h4"
           color="primary"
           className={styles['header-heading']}
         >
