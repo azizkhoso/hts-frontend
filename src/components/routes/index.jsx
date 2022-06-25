@@ -33,7 +33,18 @@ const Login = lazy(() => import('../login'));
 const Admin = lazy(() => import('../admin'));
 const SignUp = lazy(() => import('../signup'));
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 0,
+      refetchOnWindowFocus: false,
+    },
+    mutations: {
+      retry: 0,
+    }
+  }
+});
+
 export default function AppRoutes() {
   return (
     <QueryClientProvider client={queryClient}>

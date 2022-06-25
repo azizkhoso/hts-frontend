@@ -66,7 +66,7 @@ function AttemptTest() {
           // Implementing this logic so that relevant component is mounted only
           index === idx && (
             <Question
-              key={q._id}
+              key={q.id}
               question={q}
               index={index}
               onSubmit={

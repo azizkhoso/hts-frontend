@@ -15,12 +15,30 @@ import {
   TableHead,
   TableRow,
   Typography,
+  IconButton,
+  CircularProgress,
 } from '@mui/material';
+import { Delete, Visibility } from '@mui/icons-material';
 
 import ViewStudent from './ViewStudent';
+import { useQuery } from 'react-query';
+import { getStudents } from '../../api/admin/students';
+import { useDispatch } from 'react-redux';
+
+import { addErrorToast } from '../../redux/actions/toasts';
 
 export default function Students() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [students, setStudents] = React.useState([]);
+  const { isLoading } = useQuery(['admin-students'], () => getStudents(), {
+    onSuccess: ({ data }) => setStudents(data.students),
+    onError: (err) => dispatch(
+      addErrorToast({ message: err.response?.data?.error || err.message }),
+    ),
+  });
+  function handleDeleteStudent() {}
+  if (isLoading) return <div className="relative inset-0 flex items-center justify-center w-full h-full"><CircularProgress /></div>;
   return (
     <Routes>
       <Route
@@ -36,18 +54,25 @@ export default function Students() {
                     <TableCell>Full Name</TableCell>
                     <TableCell align="center">Email</TableCell>
                     <TableCell align="center">CNIC</TableCell>
-                    <TableCell align="center">Qualification</TableCell>
+                    <TableCell align="center">Action</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {
-                    [].map((student, index) => (
-                      <TableRow key={student.id} onClick={() => navigate(`${student.id}`)}>
-                        <TableCell>{index}</TableCell>
+                    students.map((student, index) => (
+                      <TableRow key={student._id} onClick={() => navigate(`${student._id}`)}>
+                        <TableCell>{index + 1}</TableCell>
                         <TableCell>{student.fullName}</TableCell>
                         <TableCell align="center">{student.email}</TableCell>
                         <TableCell align="center">{student.cnic}</TableCell>
-                        <TableCell align="center">{student.qualification}</TableCell>
+                        <TableCell align="center">
+                          <IconButton onClick={() => navigate(`update/${test._id}`)}>
+                            <Visibility />
+                          </IconButton>
+                          <IconButton onClick={() => handleDeleteStudent(test._id)}>
+                            <Delete />
+                          </IconButton>
+                        </TableCell>
                       </TableRow>
                     ))
                   }
@@ -57,7 +82,7 @@ export default function Students() {
           </div>
         )}
       />
-      <Route path="/:id" element={<ViewStudent />} />
+      <Route path="/:_id" element={<ViewStudent />} />
     </Routes>
   );
 }
