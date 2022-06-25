@@ -77,6 +77,10 @@ export function updateTest(data) {
   });
 }
 
+export function getSubmissions(testId) {
+  return admin.get(`/submissions/${testId}`);
+}
+
 export function deleteTest(_id) {
   return admin.delete(`/tests/${_id}`);
 }
