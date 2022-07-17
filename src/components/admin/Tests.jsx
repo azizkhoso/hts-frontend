@@ -91,7 +91,6 @@ export default function Tests() {
                     <TableCell align="center">Subject</TableCell>
                     <TableCell align="center">Starts At</TableCell>
                     <TableCell align="center">Submittable Before</TableCell>
-                    <TableCell align="center">Qualification</TableCell>
                     <TableCell align="center">Action</TableCell>
                   </TableRow>
                 </TableHead>
@@ -107,7 +106,6 @@ export default function Tests() {
                       <TableCell align="center" style={{ minWidth: '100px' }}>
                         {date.format(new Date(test.submittableBefore), 'DD-MMM-YYYY hh:mm A')}
                       </TableCell>
-                      <TableCell align="center">{test.qualification}</TableCell>
                       <TableCell align="center">
                         <IconButton onClick={() => navigate(`update/${test._id}`)}>
                           <Edit />

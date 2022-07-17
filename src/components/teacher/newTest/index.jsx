@@ -14,9 +14,7 @@ import {
   CircularProgress,
 } from '@mui/material';
 
-import {
-  Add, Delete, Edit,
-} from '@mui/icons-material';
+import { Add, Delete, Edit } from '@mui/icons-material';
 
 import date from 'date-and-time';
 
@@ -51,25 +49,23 @@ export default function NewTest() {
   function handleMenuClose() {
     setAnchoEl(null);
   }
-  const { isLoading, mutate } = useMutation(
-    (values) => newTest(values),
-    {
-      onSuccess: () => {
-        dispatch(addSuccessToast({ message: 'Test created successfully' }));
-        navigate('../../tests');
-      },
-      onError: (err) => dispatch(addErrorToast(
-        { message: err?.response?.data.error || err.message },
-      )),
+  const { isLoading, mutate } = useMutation((values) => newTest(values), {
+    onSuccess: () => {
+      dispatch(addSuccessToast({ message: 'Test created successfully' }));
+      navigate('../../tests');
     },
-  );
+    onError: (err) =>
+      dispatch(addErrorToast({ message: err?.response?.data.error || err.message })),
+  });
   const schema = yup.object({
     title: yup.string().required('Title is required').min(4, 'Enter at least 4 characters'),
     subject: yup.string().required('Subject is required'),
     startsAt: yup.date().min(new Date(), 'Test cannot be hold in past time'),
-    submittableBefore: yup.date().min(new Date(), 'Test cannot be uploaded after end time').required('End time is required'),
+    submittableBefore: yup
+      .date()
+      .min(new Date(), 'Test cannot be uploaded after end time')
+      .required('End time is required'),
     isDemo: yup.string(),
-    qualification: yup.string().required('Qualification is required').oneOf(['XI', 'XII', 'Bachelor', 'Masters'], 'Not a valid qualification'),
     questions: yup.array().min(3, 'The test should have at least 3 questions'),
   });
   const formik = useFormik({
@@ -79,7 +75,6 @@ export default function NewTest() {
       startsAt: new Date(),
       submittableBefore: new Date(),
       isDemo: false,
-      qualification: 'XI',
       questions: [],
     },
     validationSchema: schema,
@@ -145,18 +140,18 @@ export default function NewTest() {
         </Typography>
         <div className="flex items-center justify-center">
           <Button disabled={isLoading} variant="contained" type="submit">
-            {
-              isLoading
-                ? <CircularProgress />
-                : 'Upload'
-            }
+            {isLoading ? <CircularProgress /> : 'Upload'}
           </Button>
         </div>
       </div>
       <table>
         <tbody>
           <tr className="flex flex-col justify-between w-full lg:w-2/3 2xl:w-2/6 md:flex-row">
-            <td className="min-w-fit"><Typography variant="h6" color="primary">Title</Typography></td>
+            <td className="min-w-fit">
+              <Typography variant="h6" color="primary">
+                Title
+              </Typography>
+            </td>
             <td>
               <TextField
                 variant="outlined"
@@ -172,7 +167,11 @@ export default function NewTest() {
             </td>
           </tr>
           <tr className="flex flex-col justify-between w-full lg:w-2/3 2xl:w-2/6 md:flex-row">
-            <td className="min-w-fit"><Typography variant="h6" color="primary">Subject</Typography></td>
+            <td className="min-w-fit">
+              <Typography variant="h6" color="primary">
+                Subject
+              </Typography>
+            </td>
             <td>
               <Select
                 variant="outlined"
@@ -194,7 +193,11 @@ export default function NewTest() {
             </td>
           </tr>
           <tr className="flex flex-col justify-between w-full lg:w-2/3 2xl:w-2/6 md:flex-row">
-            <td className="min-w-fit"><Typography variant="h6" color="primary">Starts at</Typography></td>
+            <td className="min-w-fit">
+              <Typography variant="h6" color="primary">
+                Starts at
+              </Typography>
+            </td>
             <td>
               <TextField
                 type="datetime-local"
@@ -211,7 +214,11 @@ export default function NewTest() {
             </td>
           </tr>
           <tr className="flex flex-col justify-between w-full lg:w-2/3 2xl:w-2/6 md:flex-row">
-            <td className="min-w-fit"><Typography variant="h6" color="primary">Submittable Before</Typography></td>
+            <td className="min-w-fit">
+              <Typography variant="h6" color="primary">
+                Submittable Before
+              </Typography>
+            </td>
             <td>
               <TextField
                 type="datetime-local"
@@ -228,7 +235,11 @@ export default function NewTest() {
             </td>
           </tr>
           <tr className="flex flex-col justify-between w-full lg:w-2/3 2xl:w-2/6 md:flex-row">
-            <td className="min-w-fit"><Typography variant="h6" color="primary">Is demo:</Typography></td>
+            <td className="min-w-fit">
+              <Typography variant="h6" color="primary">
+                Is demo:
+              </Typography>
+            </td>
             <td className="flex justify-start w-full sm:w-60">
               <Select
                 size="small"
@@ -245,33 +256,14 @@ export default function NewTest() {
             </td>
           </tr>
           <tr className="flex flex-col justify-between w-full lg:w-2/3 2xl:w-2/6 md:flex-row">
-            <td className="min-w-fit"><Typography variant="h6" color="primary">Qualification</Typography></td>
             <td>
-              <Select
-                variant="outlined"
-                placeholder="Subject"
-                size="small"
-                className="w-full sm:w-60"
-                name="qualification"
-                onChange={formik.handleChange}
-                value={formik.values.qualification}
-                error={formik.touched.qualification && formik.errors.qualification}
-                helperText={formik.touched && formik.errors.qualification}
-              >
-                <MenuItem value="XI">XI</MenuItem>
-                <MenuItem value="XII">XII</MenuItem>
-                <MenuItem value="Bachelor">Bachelor</MenuItem>
-                <MenuItem value="Masters">Masters</MenuItem>
-              </Select>
-            </td>
-          </tr>
-          <tr className="flex flex-col justify-between w-full lg:w-2/3 2xl:w-2/6 md:flex-row">
-            <td>
-              <Typography variant="h6" color="primary">Duration:</Typography>
+              <Typography variant="h6" color="primary">
+                Duration:
+              </Typography>
             </td>
             <td>
               <Typography variant="h6">
-                { calculateTotalDuration(formik.values.questions) }
+                {calculateTotalDuration(formik.values.questions)}
               </Typography>
             </td>
           </tr>
@@ -282,49 +274,58 @@ export default function NewTest() {
         handleClose={() => setOpenMCQS(false)}
         handleSubmit={(q) => formik.setFieldValue('questions', [...formik.values.questions, q])}
       />
-      {
-        toBeUpdatedQuestion && (
-          <UpdateMCQSDialog
-            question={toBeUpdatedQuestion}
-            open={isOpenUpdateMCQS}
-            handleClose={() => { setOpenUpdateMCQS(false); setToBeUpdatedQuestion(null); }}
-            handleSubmit={(q) => updateQuestion(q)}
-          />
-        )
-      }
+      {toBeUpdatedQuestion && (
+        <UpdateMCQSDialog
+          question={toBeUpdatedQuestion}
+          open={isOpenUpdateMCQS}
+          handleClose={() => {
+            setOpenUpdateMCQS(false);
+            setToBeUpdatedQuestion(null);
+          }}
+          handleSubmit={(q) => updateQuestion(q)}
+        />
+      )}
       <NewBlankDialog
         open={isOpenBlank}
         handleClose={() => setOpenBlank(false)}
         handleSubmit={(q) => formik.setFieldValue('questions', [...formik.values.questions, q])}
       />
-      {
-        toBeUpdatedQuestion && (
-          <UpdateBlankDialog
-            question={toBeUpdatedQuestion}
-            open={isOpenUpdateBlank}
-            handleClose={() => { setOpenUpdateBlank(false); setToBeUpdatedQuestion(null); }}
-            handleSubmit={(q) => updateQuestion(q)}
-          />
-        )
-      }
+      {toBeUpdatedQuestion && (
+        <UpdateBlankDialog
+          question={toBeUpdatedQuestion}
+          open={isOpenUpdateBlank}
+          handleClose={() => {
+            setOpenUpdateBlank(false);
+            setToBeUpdatedQuestion(null);
+          }}
+          handleSubmit={(q) => updateQuestion(q)}
+        />
+      )}
       <NewTrueFalseDialog
         open={isOpenTrueFalse}
         handleClose={() => setOpenTrueFalse(false)}
         handleSubmit={(q) => formik.setFieldValue('questions', [...formik.values.questions, q])}
       />
-      {
-        toBeUpdatedQuestion && (
-          <UpdateTrueFalseDialog
-            question={toBeUpdatedQuestion}
-            open={isOpenUpdateTrueFalse}
-            handleClose={() => { setOpenUpdateTrueFalse(false); setToBeUpdatedQuestion(null); }}
-            handleSubmit={(q) => updateQuestion(q)}
-          />
-        )
-      }
-      <div className={`flex flex-col gap-3 p-3 lg:w-11/12 border rounded-xl ${formik.touched.questions && formik.errors.questions && 'border-red-500'}`}>
+      {toBeUpdatedQuestion && (
+        <UpdateTrueFalseDialog
+          question={toBeUpdatedQuestion}
+          open={isOpenUpdateTrueFalse}
+          handleClose={() => {
+            setOpenUpdateTrueFalse(false);
+            setToBeUpdatedQuestion(null);
+          }}
+          handleSubmit={(q) => updateQuestion(q)}
+        />
+      )}
+      <div
+        className={`flex flex-col gap-3 p-3 lg:w-11/12 border rounded-xl ${
+          formik.touched.questions && formik.errors.questions && 'border-red-500'
+        }`}
+      >
         <div className="flex items-center justify-between">
-          <Typography variant="h6" color="primary">Questions</Typography>
+          <Typography variant="h6" color="primary">
+            Questions
+          </Typography>
           <Button
             variant="contained"
             startIcon={<Add />}
@@ -346,62 +347,83 @@ export default function NewTest() {
               horizontal: 'right',
             }}
           >
-            <MenuItem disableRipple onClick={() => openDialog('MCQS')}>MCQS</MenuItem>
-            <MenuItem disableRipple onClick={() => openDialog('Blank')}>Blank</MenuItem>
-            <MenuItem disableRipple onClick={() => openDialog('TrueFalse')}>True/False</MenuItem>
+            <MenuItem disableRipple onClick={() => openDialog('MCQS')}>
+              MCQS
+            </MenuItem>
+            <MenuItem disableRipple onClick={() => openDialog('Blank')}>
+              Blank
+            </MenuItem>
+            <MenuItem disableRipple onClick={() => openDialog('TrueFalse')}>
+              True/False
+            </MenuItem>
           </Menu>
         </div>
-        {
-          formik.values.questions.map((q, index) => (
-            <Stack component={Card} key={q.id} className="p-3 overflow-auto">
+        {formik.values.questions.map((q, index) => (
+          <Stack component={Card} key={q.id} className="p-3 overflow-auto">
+            <Typography variant="body1">
+              {index + 1}
+              )&nbsp;
+              {q.statement}
+            </Typography>
+            {q.image && (
+              <img
+                src={URL.createObjectURL(q.image)}
+                alt="preview"
+                className="self-center w-full max-w-xs"
+              />
+            )}
+            {q.type === 'MCQS' && (
+              <>
+                <Typography variant="body2">
+                  A:&nbsp;
+                  {q.A}
+                </Typography>
+                <Typography variant="body2">
+                  B:&nbsp;
+                  {q.B}
+                </Typography>
+                <Typography variant="body2">
+                  C:&nbsp;
+                  {q.C}
+                </Typography>
+                <Typography variant="body2">
+                  D:&nbsp;
+                  {q.D}
+                </Typography>
+              </>
+            )}
+            <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
               <Typography variant="body1">
-                {index + 1}
-                )&nbsp;
-                {q.statement}
+                Answer:&nbsp;
+                {q.answer}
               </Typography>
-              {q.image && <img src={URL.createObjectURL(q.image)} alt="preview" className="self-center w-full max-w-xs" />}
-              {
-                q.type === 'MCQS' && (
-                  <>
-                    <Typography variant="body2">
-                      A:&nbsp;
-                      {q.A}
-                    </Typography>
-                    <Typography variant="body2">
-                      B:&nbsp;
-                      {q.B}
-                    </Typography>
-                    <Typography variant="body2">
-                      C:&nbsp;
-                      {q.C}
-                    </Typography>
-                    <Typography variant="body2">
-                      D:&nbsp;
-                      {q.D}
-                    </Typography>
-                  </>
-                )
-              }
-              <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
-                <Typography variant="body1">
-                  Answer:&nbsp;
-                  {q.answer}
-                </Typography>
-                <Typography variant="body1">
-                  Duration:&nbsp;
-                  {q.duration}
-                  &nbsp;seconds
-                </Typography>
-                <div className="flex items-center gap-3">
-                  <IconButton variant="contained" color="error" onClick={() => deleteQuestion(q.id)}><Delete /></IconButton>
-                  <IconButton variant="contained" color="primary" onClick={() => { setToBeUpdatedQuestion(() => q); openUpdateDialog(q.type); }}><Edit /></IconButton>
-                </div>
+              <Typography variant="body1">
+                Duration:&nbsp;
+                {q.duration}
+                &nbsp;seconds
+              </Typography>
+              <div className="flex items-center gap-3">
+                <IconButton variant="contained" color="error" onClick={() => deleteQuestion(q.id)}>
+                  <Delete />
+                </IconButton>
+                <IconButton
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {
+                    setToBeUpdatedQuestion(() => q);
+                    openUpdateDialog(q.type);
+                  }}
+                >
+                  <Edit />
+                </IconButton>
               </div>
-            </Stack>
-          ))
-        }
+            </div>
+          </Stack>
+        ))}
       </div>
-      {formik.touched.questions && formik.errors.questions && <small className="-mt-5 text-red-500">{formik.errors.questions}</small>}
+      {formik.touched.questions && formik.errors.questions && (
+        <small className="-mt-5 text-red-500">{formik.errors.questions}</small>
+      )}
     </form>
   );
 }

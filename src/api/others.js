@@ -16,7 +16,7 @@ export function getAnnouncements(isImportant) {
 export function getDemoTests(values) {
   /* Due to refetch of react query we get
     values = {
-      queryKey: ['demo-tests', { subject: <value>, qualification: <value> }]
+      queryKey: ['demo-tests', { subject: <value> }]
     }
   */
   return instance.get(`/demo-tests?${queryString.stringify(values.queryKey[1])}`);

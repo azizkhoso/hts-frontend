@@ -1,18 +1,6 @@
 import React from 'react';
 
-import {
-  Stack,
-  Card,
-  Button,
-  Typography,
-  TextField,
-  Select,
-  MenuItem,
-  FormControl,
-  FormHelperText,
-  InputLabel,
-  CircularProgress,
-} from '@mui/material';
+import { Stack, Card, Button, Typography, TextField, CircularProgress } from '@mui/material';
 
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -30,32 +18,36 @@ import logo from '../../assets/logo.png';
 export default function StudentSignup() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isLoading, mutate } = useMutation(
-    (data) => signupStudent(data),
-    {
-      onSuccess: () => {
-        dispatch(addSuccessToast({ message: 'Student registered successfully' }));
-        navigate('/login');
-      },
-      onError: (err) => dispatch(
-        addErrorToast({ message: err.response?.data?.error || err.message }),
-      ),
+  const { isLoading, mutate } = useMutation((data) => signupStudent(data), {
+    onSuccess: () => {
+      dispatch(addSuccessToast({ message: 'Student registered successfully' }));
+      navigate('/login');
     },
-  );
+    onError: (err) =>
+      dispatch(addErrorToast({ message: err.response?.data?.error || err.message })),
+  });
   // Form requirements
   const schema = yup.object({
-    fullName: yup.string().required('Full Name is required').min(2, 'Full Name should be at least 2 characters long'),
+    fullName: yup
+      .string()
+      .required('Full Name is required')
+      .min(2, 'Full Name should be at least 2 characters long'),
     email: yup.string().required('Email is required').email('Enter a valid email'),
-    password: yup.string().required('Password is required').min(8, 'Password should be at least 8 characters long'),
-    qualification: yup.string().required('Qualification is required').oneOf(['X', 'XII', 'Bachelor', 'Masters'], 'Not eligible for given qualification'),
-    cnic: yup.number().required('CNIC is required').min(1000000000000, 'Enter a valid CNIC').max(9999999999999, 'Enter a valid CNIC'),
+    password: yup
+      .string()
+      .required('Password is required')
+      .min(8, 'Password should be at least 8 characters long'),
+    cnic: yup
+      .number()
+      .required('CNIC is required')
+      .min(1000000000000, 'Enter a valid CNIC')
+      .max(9999999999999, 'Enter a valid CNIC'),
   });
   const formik = useFormik({
     initialValues: {
       fullName: '',
       email: '',
       password: '',
-      qualification: 'X',
       cnic: 0,
     },
     validationSchema: schema,
@@ -69,9 +61,13 @@ export default function StudentSignup() {
           <Button variant="contained" className="flex-grow">Teacher</Button>
           <Button variant="outlined" className="flex-grow">Student</Button>
         </div> */}
-        <Typography variant="h5" align="center">Welcome to</Typography>
+        <Typography variant="h5" align="center">
+          Welcome to
+        </Typography>
         <img className="self-center w-32" alt="hts logo" src={logo} />
-        <Typography variant="h5" align="center">Sign up as a Student</Typography>
+        <Typography variant="h5" align="center">
+          Sign up as a Student
+        </Typography>
         <Stack spacing={2} className="px-6" component="form" onSubmit={formik.handleSubmit}>
           <TextField
             variant="outlined"
@@ -104,29 +100,6 @@ export default function StudentSignup() {
             error={formik.touched.password && formik.errors.password}
             helperText={formik.touched.password && formik.errors.password}
           />
-          <FormControl
-            variant="outlined"
-            fullWidth
-            error={formik.touched.qualification && formik.errors.qualification}
-          >
-            <InputLabel id="qualificationLabel" className="px-1 bg-white">Qualification</InputLabel>
-            <Select
-              labelId="qualificationLabel"
-              name="qualification"
-              value={formik.values.qualification}
-              onChange={formik.handleChange}
-            >
-              <MenuItem value="X">X</MenuItem>
-              <MenuItem value="XII">XII</MenuItem>
-              <MenuItem value="Bachelor">Bachelor</MenuItem>
-              <MenuItem value="Masters">Masters</MenuItem>
-            </Select>
-            {
-              formik.touched.qualification && formik.errors.qualification && (
-                <FormHelperText>{formik.errors.qualification}</FormHelperText>
-              )
-            }
-          </FormControl>
           <TextField
             variant="outlined"
             fullWidth
@@ -139,14 +112,12 @@ export default function StudentSignup() {
             helperText={formik.touched.cnic && formik.errors.cnic}
           />
           <Button type="submit" disabled={isLoading} variant="contained">
-            {
-              isLoading
-                ? <CircularProgress />
-                : 'Signup as a Student'
-            }
+            {isLoading ? <CircularProgress /> : 'Signup as a Student'}
           </Button>
           <Link to="/login/student">
-            <Typography variant="h6" align="center" color="primary">Already registered? Login</Typography>
+            <Typography variant="h6" align="center" color="primary">
+              Already registered? Login
+            </Typography>
           </Link>
         </Stack>
       </Stack>
