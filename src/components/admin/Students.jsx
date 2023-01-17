@@ -17,6 +17,7 @@ import {
   Typography,
   IconButton,
   CircularProgress,
+  Pagination,
 } from '@mui/material';
 import { Delete, Visibility } from '@mui/icons-material';
 
@@ -30,8 +31,9 @@ import { addErrorToast } from '../../redux/actions/toasts';
 export default function Students() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [page, setPage] = React.useState(1);
   const [students, setStudents] = React.useState([]);
-  const { isLoading } = useQuery(['admin-students'], () => getStudents(), {
+  const { isLoading } = useQuery(['admin-students', page], () => getStudents(page), {
     onSuccess: ({ data }) => setStudents(data.students),
     onError: (err) => dispatch(
       addErrorToast({ message: err.response?.data?.error || err.message }),
@@ -79,6 +81,7 @@ export default function Students() {
                 </TableBody>
               </Table>
             </TableContainer>
+            <Pagination className='mx-auto' count={10} page={page} onChange={(e, p) => setPage(p)}  />
           </div>
         )}
       />

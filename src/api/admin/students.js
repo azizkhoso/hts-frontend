@@ -22,6 +22,6 @@ students.interceptors.request.use((config) => {
   return updated;
 });
 
-export function getStudents() {
-  return students.get();
+export function getStudents(page) {
+  return students.get(`?page=${page}`);
 }
