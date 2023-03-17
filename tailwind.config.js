@@ -7,10 +7,6 @@ module.exports = {
     './src/**/*.{js,jsx,ts,tsx}',
   ],
   theme: {
-    button: {
-      '-webkit-appearance': 'button',
-      'background-image': 'none',
-    },
     extend: {
       screen: {
         xs: '0px',
@@ -26,9 +22,7 @@ module.exports = {
       },
     },
   },
-  variants: {
-    extend: {},
-  },
+  variants: {},
   plugins: [
     plugin(({ addUtilities }) => { // Custom utilities
       const newUtilities = {
@@ -42,6 +36,6 @@ module.exports = {
         },
       };
       addUtilities(newUtilities, ['responsive', 'hover']);
-    }),
+    })
   ],
 };

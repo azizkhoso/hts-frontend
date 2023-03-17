@@ -1,17 +1,8 @@
 import React from 'react';
 
-import {
-  Stack,
-  Card,
-  Button,
-  Typography,
-  TextField,
-  CircularProgress,
-} from '@mui/material';
+import { Stack, Card, Button, Typography, TextField, CircularProgress } from '@mui/material';
 
-import {
-  useMutation,
-} from 'react-query';
+import { useMutation } from 'react-query';
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -30,22 +21,21 @@ export default function StudentLogin() {
   const dispatch = useDispatch();
   // const navigate = useNavigate();
   const student = useSelector((state) => state.account.student);
-  const { isLoading, mutate } = useMutation(
-    (values) => loginStudent(values),
-    {
-      onSuccess: ({ data }) => {
-        dispatch(login(data));
-        localStorage.setItem('hts-token', data.token);
-      },
-      onError: (err) => dispatch(
-        addErrorToast({ message: err.response?.data?.error || err.message }),
-      ),
+  const { isLoading, mutate } = useMutation((values) => loginStudent(values), {
+    onSuccess: ({ data }) => {
+      dispatch(login(data));
+      localStorage.setItem('hts-token', data.token);
     },
-  );
+    onError: (err) =>
+      dispatch(addErrorToast({ message: err.response?.data?.error || err.message })),
+  });
   // Form requirements
   const schema = yup.object({
     email: yup.string().required('Email is required').email('Enter a valid email'),
-    password: yup.string().required('Password is required').min(8, 'Password should be at least 8 characters long'),
+    password: yup
+      .string()
+      .required('Password is required')
+      .min(8, 'Password should be at least 8 characters long'),
   });
   const formik = useFormik({
     initialValues: {
@@ -66,9 +56,13 @@ export default function StudentLogin() {
           <Button variant="outlined" className="flex-grow"
           onClick={() => navigate('/login/student')}>Student</Button>
         </div> */}
-        <Typography variant="h5" align="center">Welcome Back</Typography>
+        <Typography variant="h5" align="center">
+          Welcome Back
+        </Typography>
         <img className="self-center w-32" alt="hts logo" src={logo} />
-        <Typography variant="h5" align="center">Login as a Student</Typography>
+        <Typography variant="h5" align="center">
+          Login as a Student
+        </Typography>
         <Stack spacing={2} className="px-6" component="form" onSubmit={formik.handleSubmit}>
           <TextField
             variant="outlined"
@@ -92,14 +86,12 @@ export default function StudentLogin() {
             helperText={formik.touched.password && formik.errors.password}
           />
           <Button type="submit" disabled={isLoading} variant="contained">
-            {
-              isLoading
-                ? <CircularProgress />
-                : 'Login as Student'
-            }
+            {isLoading ? <CircularProgress /> : 'Login as Student'}
           </Button>
           <Link to="/signup/student">
-            <Typography variant="h6" align="center" color="primary">Don&apos;t have account? Register</Typography>
+            <Typography variant="h6" align="center" color="primary">
+              Don&apos;t have account? Register
+            </Typography>
           </Link>
         </Stack>
       </Stack>

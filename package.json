@@ -10,14 +10,13 @@
     "@testing-library/jest-dom": "5.16.4",
     "@testing-library/react": "13.2.0",
     "@testing-library/user-event": "13.5.0",
-    "autoprefixer": "10.4.7",
     "axios": "0.27.2",
+    "craco": "^0.0.3",
     "date-and-time": "2.3.1",
     "formik": "2.2.9",
     "moment": "2.29.3",
     "nanoid": "3.3.4",
     "object-to-formdata": "4.4.2",
-    "postcss": "8.4.13",
     "prop-types": "15.8.1",
     "query-string": "7.1.1",
     "react": "18.1.0",
@@ -30,14 +29,13 @@
     "react-router-dom": "6.3.0",
     "react-scripts": "5.0.1",
     "redux": "4.2.0",
-    "tailwindcss": "2.2.19",
     "web-vitals": "2.1.4",
     "yup": "0.32.11"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -57,5 +55,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "autoprefixer": "^9",
+    "postcss": "^7",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   }
 }
