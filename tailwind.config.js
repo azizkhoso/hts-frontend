@@ -19,7 +19,7 @@ module.exports = {
       colors: {
         primary: '#3c7daa',
         secondary: '#95251e',
-      },
+      }
     },
   },
   variants: {},

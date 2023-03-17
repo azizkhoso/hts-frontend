@@ -16,15 +16,6 @@
   primary:      #173041
 */
 
-@layer base {
-
-  /* Apply primary color to only MuiButton of type submit */
-  button[type='submit'],
-  [class*='MuiButton'] {
-    @apply bg-primary
-  }
-}
-
 .row {
   display: flex;
   flex-wrap: wrap;
