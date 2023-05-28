@@ -16,6 +16,8 @@ import {
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
+const subjects = ['English', 'Math', 'Physics', 'Chemistery', 'Biology', 'MDCAT', 'ECAT', 'STS IBA', 'NTS', 'SPSC'];
+
 export default function NewTeacher() {
   // Form requirements
   const schema = yup.object({
@@ -103,11 +105,11 @@ export default function NewTeacher() {
               value={formik.values.subjects}
               error={formik.touched.subjects && Boolean(formik.errors.subjects)}
             >
-              <MenuItem value="English">English</MenuItem>
-              <MenuItem value="Math">Math</MenuItem>
-              <MenuItem value="Physics">Physics</MenuItem>
-              <MenuItem value="Chemistry">Chemistry</MenuItem>
-              <MenuItem value="Biology">Biology</MenuItem>
+              {
+                subjects.map((s) => (
+                  <MenuItem value={s}>{s}</MenuItem>
+                ))
+              }
             </Select>
             { formik.touched && formik.errors.subjects && (
               <Typography className="pl-3 my-1 text-xs text-red-500">

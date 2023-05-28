@@ -38,6 +38,21 @@ import {
   UpdateTrueFalseDialog,
 } from '../questionDialogs';
 
+function makeImageNull(obj) {
+  for (let prop in obj) {
+    if (obj.hasOwnProperty(prop)) {
+      if (typeof obj[prop] === 'object' && obj[prop] !== null) {
+        makeImageNull(obj[prop]);
+      } else if (prop === 'image') {
+        obj[prop] = null;
+      }
+    }
+  }
+  return obj;
+}
+
+const subjects = ['English', 'Math', 'Physics', 'Chemistery', 'Biology', 'MDCAT', 'ECAT', 'STS IBA', 'NTS', 'SPSC'];
+
 export default function NewTest() {
   const [anchorEl, setAnchoEl] = React.useState(null);
   const dispatch = useDispatch();
@@ -52,6 +67,7 @@ export default function NewTest() {
   const { isLoading, mutate } = useMutation((values) => newTest(values), {
     onSuccess: () => {
       dispatch(addSuccessToast({ message: 'Test created successfully' }));
+      localStorage.removeItem('#new-test'); // no need to save changes in local storage any more
       navigate('../../tests');
     },
     onError: (err) =>
@@ -69,7 +85,8 @@ export default function NewTest() {
     questions: yup.array().min(3, 'The test should have at least 3 questions'),
   });
   const formik = useFormik({
-    initialValues: {
+    initialValues: makeImageNull(JSON.parse(localStorage.getItem('#new-test'))) || {
+      // images are null because they are not saved in localstorage
       title: '',
       subject: 'English',
       startsAt: new Date(),
@@ -80,6 +97,7 @@ export default function NewTest() {
     validationSchema: schema,
     onSubmit: (values) => mutate(values),
   });
+  localStorage.setItem('#new-test', JSON.stringify(formik.values)); // for saving changes in local storage
   const [toBeUpdatedQuestion, setToBeUpdatedQuestion] = React.useState(null);
   const [isOpenMCQS, setOpenMCQS] = React.useState(false);
   const [isOpenBlank, setOpenBlank] = React.useState(false);
@@ -184,11 +202,11 @@ export default function NewTest() {
                 error={formik.touched.subject && formik.errors.subject}
                 helperText={formik.touched && formik.errors.subject}
               >
-                <MenuItem value="English">English</MenuItem>
-                <MenuItem value="Math">Math</MenuItem>
-                <MenuItem value="Physics">Physics</MenuItem>
-                <MenuItem value="Chemistry">Chemistry</MenuItem>
-                <MenuItem value="Biology">Biology</MenuItem>
+                {
+                  subjects.map((s) => (
+                    <MenuItem value={s}>{s}</MenuItem>
+                  ))
+                }
               </Select>
             </td>
           </tr>
@@ -365,9 +383,9 @@ export default function NewTest() {
               )&nbsp;
               {q.statement}
             </Typography>
-            {q.image && (
+            {q.image && q.image.name && (
               <img
-                src={URL.createObjectURL(q.image)}
+                src={q.image && URL.createObjectURL(q.image)}
                 alt="preview"
                 className="self-center w-full max-w-xs"
               />

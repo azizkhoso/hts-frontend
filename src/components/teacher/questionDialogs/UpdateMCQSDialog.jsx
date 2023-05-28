@@ -60,7 +60,7 @@ export default function UpdateMCQSDialog({
       }}
     >
       <form onSubmit={formik.handleSubmit} className="flex flex-col w-full">
-        <DialogTitle className="text-center">New MCQS Question</DialogTitle>
+        <DialogTitle className="text-center">Update MCQS Question</DialogTitle>
         <DialogContent style={{ paddingTop: '0.5rem' }}>
           <Stack spacing={1}>
             <TextField
@@ -85,7 +85,7 @@ export default function UpdateMCQSDialog({
                       )
                     )
                   )
-                ) || (typeof question.image === 'object' ? URL.createObjectURL(question.image) : question.image)}
+                ) || (typeof question.image === 'object' ? (question.image.name ? URL.createObjectURL(question.image) : '') : question.image)}
                 alt="preview"
               />
               <input

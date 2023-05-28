@@ -27,11 +27,11 @@ function calculateTotalCorrect(questions, answers) {
 }
 
 const grades = [
-  { name: 'A', value: '4, 5' },
-  { name: 'B', value: '3, <=4' },
-  { name: 'C', value: '2, <=3' },
-  { name: 'D', value: '1, <=2' },
-  { name: 'E', value: '0, <=1' },
+  { name: 'A', value: '4 <=5' },
+  { name: 'B', value: '3 <=4' },
+  { name: 'C', value: '2 <=3' },
+  { name: 'D', value: '1 <=2' },
+  { name: 'E', value: '0 <=1' },
   { name: 'F', value: '<=0' },
 ];
 

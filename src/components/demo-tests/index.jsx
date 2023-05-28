@@ -28,8 +28,9 @@ import AttempTest from './AttempTest';
 
 import styles from './DemoTests.module.css';
 
+const subjects = ['English', 'Math', 'Physics', 'Chemistery', 'Biology', 'MDCAT', 'ECAT', 'STS IBA', 'NTS', 'SPSC'];
+
 function DemoTests() {
-  const subjects = ['English', 'Math', 'Physics', 'Chemistery', 'Biology'];
   const { search } = useLocation();
   const [filter, setFilter] = React.useState(queryString.parse(search));
   const [demoTests, setDemoTests] = React.useState([]);
@@ -92,7 +93,11 @@ function DemoTests() {
                         </Typography>
                         <Typography variant="body1">{`Subject: ${test.subject}`}</Typography>
                         <Typography variant="body1">{`Total questions: ${test.questions.length}`}</Typography>
-                        <Typography variant="body1">{`Created by: ${test.createdBy}`}</Typography>
+                        {
+                          test.createdBy && (
+                            <Typography variant="body1">{`Created by: ${test.createdBy}`}</Typography>
+                          )
+                        }
                       </Card>
                     </Link>
                   ))}

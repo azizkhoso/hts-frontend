@@ -21,7 +21,7 @@ import {
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-export default function NewTrueFalseDialog({
+export default function UpdateTrueFalseDialog({
   open, handleClose, handleSubmit, question,
 }) {
   const imgRef = React.useRef();
@@ -77,7 +77,7 @@ export default function NewTrueFalseDialog({
                       URL.createObjectURL(imgRef.current.files[0])
                     )
                   )
-                )) || (typeof question.image === 'object' ? URL.createObjectURL(question.image) : question.image)}
+                )) || (typeof question.image === 'object' ? (question.image.name ? URL.createObjectURL(question.image) : '') : question.image)}
                 alt="preview"
               />
               <input
@@ -133,7 +133,7 @@ export default function NewTrueFalseDialog({
   );
 }
 
-NewTrueFalseDialog.propTypes = {
+UpdateTrueFalseDialog.propTypes = {
   question: PropTypes.object.isRequired,
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,

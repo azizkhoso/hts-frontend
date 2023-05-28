@@ -40,6 +40,8 @@ import {
   UpdateTrueFalseDialog,
 } from '../questionDialogs';
 
+const subjects = ['English', 'Math', 'Physics', 'Chemistery', 'Biology', 'MDCAT', 'ECAT', 'STS IBA', 'NTS', 'SPSC'];
+
 export default function UpdateTest() {
   const { _id } = useParams();
   const dispatch = useDispatch();
@@ -200,11 +202,11 @@ export default function UpdateTest() {
                 error={formik.touched.subject && formik.errors.subject}
                 helperText={formik.touched && formik.errors.subject}
               >
-                <MenuItem value="English">English</MenuItem>
-                <MenuItem value="Math">Math</MenuItem>
-                <MenuItem value="Physics">Physics</MenuItem>
-                <MenuItem value="Chemistry">Chemistry</MenuItem>
-                <MenuItem value="Biology">Biology</MenuItem>
+                {
+                  subjects.map((s) => (
+                    <MenuItem value={s}>{s}</MenuItem>
+                  ))
+                }
               </Select>
             </td>
           </tr>
