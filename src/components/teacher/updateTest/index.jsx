@@ -157,7 +157,7 @@ export default function UpdateTest() {
           Update Test
         </Typography>
         <div className="flex items-center justify-center">
-          <Button disabled={updateMutation.isLoading} variant="contained" type="submit">
+          <Button disabled={updateMutation.isLoading} variant="outlined" type="submit">
             {updateMutation.isLoading ? <CircularProgress /> : 'Update'}
           </Button>
         </div>
@@ -347,7 +347,7 @@ export default function UpdateTest() {
             Questions
           </Typography>
           <Button
-            variant="contained"
+            variant="outlined"
             startIcon={<Add />}
             className="self-end"
             onClick={(e) => handleMenuOpen(e)}
@@ -423,11 +423,11 @@ export default function UpdateTest() {
                 &nbsp;seconds
               </Typography>
               <div className="flex items-center gap-3">
-                <IconButton variant="contained" color="error" onClick={() => deleteQuestion(q.id)}>
+                <IconButton variant="outlined" color="error" onClick={() => deleteQuestion(q.id)}>
                   <Delete />
                 </IconButton>
                 <IconButton
-                  variant="contained"
+                  variant="outlined"
                   color="primary"
                   onClick={() => {
                     setToBeUpdatedQuestion(() => q);

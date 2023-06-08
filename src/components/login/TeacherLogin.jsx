@@ -36,7 +36,7 @@ export default function TeacherLogin() {
       <Stack spacing={2}>
         <div className="flex">
           <Button variant="outlined" className="flex-grow" onClick={() => navigate('/login/teacher')}>Teacher</Button>
-          <Button variant="contained" className="flex-grow" onClick={() => navigate('/login/student')}>Student</Button>
+          <Button variant="outlined" className="flex-grow" onClick={() => navigate('/login/student')}>Student</Button>
         </div>
         <Typography variant="h5" align="center">Welcome Back</Typography>
         <img className="self-center w-32" alt="hts logo" src={logo} />
@@ -63,7 +63,7 @@ export default function TeacherLogin() {
             error={formik.touched.password && formik.errors.password}
             helperText={formik.touched.password && formik.errors.password}
           />
-          <Button type="submit" variant="contained">Login as a Teacher</Button>
+          <Button type="submit" variant="outlined">Login as a Teacher</Button>
         </Stack>
       </Stack>
     </Card>

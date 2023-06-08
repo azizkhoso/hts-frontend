@@ -20,7 +20,7 @@ export default function StudentSignup() {
   const navigate = useNavigate();
   const { isLoading, mutate } = useMutation((data) => signupStudent(data), {
     onSuccess: () => {
-      dispatch(addSuccessToast({ message: 'Student registered successfully' }));
+      dispatch(addSuccessToast({ message: 'Student registered, verification email sent successfully' }));
       navigate('/login');
     },
     onError: (err) =>
@@ -58,7 +58,7 @@ export default function StudentSignup() {
     <Card elevation={3} className="w-full pb-6 my-6">
       <Stack spacing={2}>
         {/* <div className="flex">
-          <Button variant="contained" className="flex-grow">Teacher</Button>
+          <Button variant="outlined" className="flex-grow">Teacher</Button>
           <Button variant="outlined" className="flex-grow">Student</Button>
         </div> */}
         <Typography variant="h5" align="center">
@@ -111,7 +111,7 @@ export default function StudentSignup() {
             error={formik.touched.cnic && formik.errors.cnic}
             helperText={formik.touched.cnic && formik.errors.cnic}
           />
-          <Button type="submit" disabled={isLoading} variant="contained">
+          <Button type="submit" disabled={isLoading} variant="outlined">
             {isLoading ? <CircularProgress /> : 'Signup as a Student'}
           </Button>
           <Link to="/login/student">

@@ -56,7 +56,7 @@ function Contact() {
               className="w-full"
             />
             <Button
-              variant="contained"
+              variant="outlined"
               type="submit"
               className="self-center"
             >

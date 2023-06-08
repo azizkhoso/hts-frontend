@@ -123,7 +123,7 @@ export default function NewAnnouncement() {
             )}
           </Grid>
           <Grid item xs={12} className="flex items-center justify-center">
-            <Button type="submit" disabled={isLoading} variant="contained" startIcon={<Add />}>
+            <Button type="submit" disabled={isLoading} variant="outlined" startIcon={<Add />}>
               {
                 isLoading
                   ? <CircularProgress />

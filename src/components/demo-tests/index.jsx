@@ -113,7 +113,7 @@ function DemoTests() {
                   <Typography variant="body1" color="error">
                     An error occured
                   </Typography>
-                  <Button onClick={() => refetch(filter)} variant="contained">
+                  <Button onClick={() => refetch(filter)} variant="outlined">
                     Reload
                   </Button>
                 </div>

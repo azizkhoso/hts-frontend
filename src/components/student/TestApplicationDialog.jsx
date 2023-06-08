@@ -57,7 +57,7 @@ export default function TestApplicationDialog({ open, handleClose, test }) {
             accept="image/*"
             onChange={(e) => setImg(e.target.files[0])}
           />
-          <Button variant="contained" disabled={isLoading} className="mx-auto" onClick={() => mutate({ test: test._id, image: img })}>
+          <Button variant="outlined" disabled={isLoading} className="mx-auto" onClick={() => mutate({ test: test._id, image: img })}>
             {
               isLoading
                 ? <CircularProgress />

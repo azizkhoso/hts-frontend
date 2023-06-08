@@ -51,7 +51,7 @@ export default function StudentLogin() {
     <Card elevation={3} className="w-full pb-6 my-6">
       <Stack spacing={2}>
         {/* <div className="flex">
-          <Button variant="contained" className="flex-grow"
+          <Button variant="outlined" className="flex-grow"
           onClick={() => navigate('/login/teacher')}>Teacher</Button>
           <Button variant="outlined" className="flex-grow"
           onClick={() => navigate('/login/student')}>Student</Button>
@@ -85,7 +85,7 @@ export default function StudentLogin() {
             error={Boolean(formik.touched.password) && formik.errors.password}
             helperText={formik.touched.password && formik.errors.password}
           />
-          <Button type="submit" disabled={isLoading} variant="contained">
+          <Button type="submit" disabled={isLoading} variant="outlined">
             {isLoading ? <CircularProgress /> : 'Login as Student'}
           </Button>
           <Link to="/signup/student">

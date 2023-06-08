@@ -84,7 +84,7 @@ export default function AdminLogin() {
             error={formik.touched.password && formik.errors.password}
             helperText={formik.touched.password && formik.errors.password}
           />
-          <Button type="submit" disabled={isLoading} variant="contained">
+          <Button type="submit" disabled={isLoading} variant="outlined">
             {
               isLoading
                 ? <CircularProgress />

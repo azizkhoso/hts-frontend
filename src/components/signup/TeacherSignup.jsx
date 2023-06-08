@@ -60,7 +60,7 @@ export default function TeacherSignup() {
           <Button variant="outlined" className="flex-grow">
             Teacher
           </Button>
-          <Button variant="contained" className="flex-grow">
+          <Button variant="outlined" className="flex-grow">
             Student
           </Button>
         </div>
@@ -122,7 +122,7 @@ export default function TeacherSignup() {
             error={formik.touched.cnic && formik.errors.cnic}
             helperText={formik.touched.cnic && formik.errors.cnic}
           />
-          <Button type="submit" variant="contained">
+          <Button type="submit" variant="outlined">
             Signup as a Teacher
           </Button>
         </Stack>

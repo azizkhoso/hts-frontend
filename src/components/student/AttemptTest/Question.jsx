@@ -106,7 +106,7 @@ function Question({ question, index, onSubmit, onSkip }) {
           Skip
         </Button>
         <Button
-          variant="contained"
+          variant="outlined"
           disabled={!answer}
           color="primary"
           onClick={() => handleSubmit()}

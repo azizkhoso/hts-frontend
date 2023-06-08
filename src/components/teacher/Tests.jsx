@@ -43,7 +43,7 @@ export default function Tests() {
         element={
           <div className="flex flex-col w-full h-full gap-6">
             <div className="flex justify-end w-full">
-              <Button variant="contained" startIcon={<Add />} onClick={() => navigate('new-test')}>
+              <Button variant="outlined" startIcon={<Add />} onClick={() => navigate('new-test')}>
                 New Test
               </Button>
             </div>

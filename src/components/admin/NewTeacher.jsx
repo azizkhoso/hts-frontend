@@ -118,7 +118,7 @@ export default function NewTeacher() {
             )}
           </Grid>
           <Grid item xs={12} className="flex items-center justify-center">
-            <Button type="submit" variant="contained" startIcon={<Add />}>Add</Button>
+            <Button type="submit" variant="outlined" startIcon={<Add />}>Add</Button>
           </Grid>
         </Grid>
       </Grid>

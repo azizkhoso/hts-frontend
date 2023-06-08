@@ -184,8 +184,8 @@ export default function UpdateMCQSDialog({
                     helperText={formik.touched.duration && formik.errors.duration}
                   />
                 </div>
-                <Button variant="contained" color="error" className="md:self-center" startIcon={<Close />} onClick={() => { formik.resetForm(); handleClose(); }}>Cancel</Button>
-                <Button variant="contained" type="submit" className="md:self-center" startIcon={<Edit />}>Update</Button>
+                <Button variant="outlined" color="error" className="md:self-center" startIcon={<Close />} onClick={() => { formik.resetForm(); handleClose(); }}>Cancel</Button>
+                <Button variant="outlined" type="submit" className="md:self-center" startIcon={<Edit />}>Update</Button>
               </div>
             </div>
           </Stack>

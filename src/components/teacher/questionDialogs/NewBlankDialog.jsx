@@ -115,8 +115,8 @@ export default function NewBlankDialog({ open, handleClose, handleSubmit }) {
                 />
               </div>
               <div className="flex-grow" />
-              <Button variant="contained" color="error" className="md:self-center" startIcon={<Close />} onClick={() => { formik.resetForm(); handleClose(); }}>Cancel</Button>
-              <Button variant="contained" type="submit" className="md:self-center" startIcon={<Add />}>Add</Button>
+              <Button variant="outlined" color="error" className="md:self-center" startIcon={<Close />} onClick={() => { formik.resetForm(); handleClose(); }}>Cancel</Button>
+              <Button variant="outlined" type="submit" className="md:self-center" startIcon={<Add />}>Add</Button>
             </div>
           </Stack>
         </DialogContent>

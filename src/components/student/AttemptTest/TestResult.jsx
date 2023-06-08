@@ -110,7 +110,7 @@ function TestResult({ questions, answers, testId }) {
           {!isError ? (
             <div className="w-full flex">
               <Button
-                variant="contained"
+                variant="outlined"
                 disabled={isLoading || isSubmitted}
                 onClick={() => handleSubmit()}
                 className="m-auto"
@@ -128,7 +128,7 @@ function TestResult({ questions, answers, testId }) {
               >
                 An error occurred, try uploading again
               </Typography>
-              <Button variant="contained" onClick={() => handleSubmit()}>
+              <Button variant="outlined" onClick={() => handleSubmit()}>
                 Upload Again
               </Button>
             </div>

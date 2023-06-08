@@ -67,7 +67,7 @@ export default function Announcements() {
         element={(
           <div className="flex flex-col w-full h-full gap-6">
             <div className="flex justify-end w-full">
-              <Button variant="contained" startIcon={<Add />} onClick={() => navigate('new-announcement')}>New Announcement</Button>
+              <Button variant="outlined" startIcon={<Add />} onClick={() => navigate('new-announcement')}>New Announcement</Button>
             </div>
             <Typography variant="h6" align="center">Announcements</Typography>
             <TableContainer className="w-full" component={Card}>

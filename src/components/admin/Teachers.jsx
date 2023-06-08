@@ -35,7 +35,7 @@ export default function Teachers() {
         element={(
           <div className="flex flex-col w-full h-full gap-6">
             <div className="flex justify-end w-full">
-              <Button variant="contained" startIcon={<Add />} onClick={() => navigate('new-teacher')}>New Teacher</Button>
+              <Button variant="outlined" startIcon={<Add />} onClick={() => navigate('new-teacher')}>New Teacher</Button>
             </div>
             <Typography variant="h6" align="center">Teachers</Typography>
             <TableContainer className="w-full" component={Card}>
