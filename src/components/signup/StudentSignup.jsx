@@ -14,14 +14,16 @@ import { addSuccessToast, addErrorToast } from '../../redux/actions/toasts';
 import { signupStudent } from '../../api/signup';
 
 import logo from '../../assets/logo.png';
+import VerificationEmailModal from './VerificationEamilModal';
 
 export default function StudentSignup() {
+  const [isOpenModal, setOpenModal] = React.useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isLoading, mutate } = useMutation((data) => signupStudent(data), {
     onSuccess: () => {
       dispatch(addSuccessToast({ message: 'Student registered, verification email sent successfully' }));
-      navigate('/login');
+      setOpenModal(true);
     },
     onError: (err) =>
       dispatch(addErrorToast({ message: err.response?.data?.error || err.message })),
@@ -121,6 +123,7 @@ export default function StudentSignup() {
           </Link>
         </Stack>
       </Stack>
+      <VerificationEmailModal isOpen={isOpenModal} onClose={() => { setOpenModal(false); navigate('/login'); }} />
     </Card>
   );
 }

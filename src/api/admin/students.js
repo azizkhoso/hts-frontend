@@ -25,3 +25,11 @@ students.interceptors.request.use((config) => {
 export function getStudents(page) {
   return students.get(`?page=${page}`);
 }
+
+export function deleteStudent(id) {
+  return students.delete(`/${id}`);
+}
+
+export function getStudentSubmissions(id) {
+  return students.get(`/${id}/tests`);
+}
