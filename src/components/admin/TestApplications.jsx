@@ -125,8 +125,8 @@ export default function TestApplications() {
                   </TableCell>
                   <TableCell align="center">
                     <PhotoProvider>
-                      <PhotoView src={`${process.env.REACT_APP_BACKEND_URL}/challans/${application.image}`}>
-                        <img src={`${process.env.REACT_APP_BACKEND_URL}/challans/${application.image}`} alt="application" className="w-8 h-8" />
+                      <PhotoView src={`${process.env.REACT_APP_BACKEND_URL}/uploads/challans/${application.student._id}/${application.image}`}>
+                        <img src={`${process.env.REACT_APP_BACKEND_URL}/uploads/challans/${application.student._id}/${application.image}`} alt="application" className="w-8 h-8" />
                       </PhotoView>
                     </PhotoProvider>
                   </TableCell>

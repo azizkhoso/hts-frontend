@@ -35,14 +35,26 @@ export default function Tests() {
   const student = useSelector((state) => state.account.student);
   const dispatch = useDispatch();
   const [tests, setTests] = React.useState([]);
+  const [attemptedTests, setAttemptedTests] = React.useState({});
   const [selectedTest, setSelectedTest] = React.useState({});
   const [openDialog, setOpenDialog] = React.useState(false);
   const { isLoading } = useQuery(['tests', student._id], getTests, {
-    onSuccess: ({ data }) => setTests(data.tests),
+    onSuccess: ({ data }) => {
+      setTests(data.tests);
+      if (Array.isArray(data.attemptedTests)) {
+        data.attemptedTests.forEach((t) => {
+          setAttemptedTests((at) => ({
+            ...at,
+            [t.test]: t
+          }));
+        });
+      }
+    },
     onError: (err) => dispatch(
       addErrorToast({ message: err.response?.data?.error || err.message }),
     ),
   });
+  console.log({ attemptedTests });
   if (isLoading) return <div className="relative inset-0 flex items-center justify-center w-full h-full"><CircularProgress /></div>;
   return (
     <Routes>
@@ -81,7 +93,7 @@ export default function Tests() {
                         <TableCell align="center">
                           <Button variant="text" color="primary" onClick={() => { setOpenDialog(true); setSelectedTest(test) }}>Apply</Button>
                           <Link to={`../../tests/${test._id}`}>
-                            <Button variant="text" color="primary">Attempt</Button>
+                            <Button variant="text" color="primary" disabled={attemptedTests[test._id]}>Attempt</Button>
                           </Link>
                         </TableCell>
                       </TableRow>
