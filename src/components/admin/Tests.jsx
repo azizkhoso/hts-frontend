@@ -62,6 +62,9 @@ export default function Tests() {
       deleteMutation.mutate(_id);
     }
   }
+  React.useEffect(() => {
+    refetch();
+  }, []);
   if (isLoading)
     return (
       <div className="relative inset-0 flex items-center justify-center w-full h-full">
@@ -90,6 +93,7 @@ export default function Tests() {
                     <TableCell>Test Title</TableCell>
                     <TableCell align="center">Subject</TableCell>
                     <TableCell align="center">Starts At</TableCell>
+                    <TableCell align="center">Price</TableCell>
                     <TableCell align="center">Submittable Before</TableCell>
                     <TableCell align="center">Action</TableCell>
                   </TableRow>
@@ -102,6 +106,9 @@ export default function Tests() {
                       <TableCell align="center">{test.subject}</TableCell>
                       <TableCell align="center" style={{ minWidth: '100px' }}>
                         {date.format(new Date(test.startsAt), 'DD-MMM-YYYY hh:mm A')}
+                      </TableCell>
+                      <TableCell align="center" style={{ minWidth: '100px' }}>
+                        {test.price === 0 ? 'Free' : test.price}
                       </TableCell>
                       <TableCell align="center" style={{ minWidth: '100px' }}>
                         {date.format(new Date(test.submittableBefore), 'DD-MMM-YYYY hh:mm A')}

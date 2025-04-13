@@ -49,6 +49,7 @@ export function newTest(data) {
   fd.append('startsAt', data.startsAt);
   fd.append('submittableBefore', data.submittableBefore);
   fd.append('isDemo', Boolean(data.isDemo));
+  fd.append('price', data.price);
   fd.append('questions', JSON.stringify(data.questions));
   data.questions.forEach((q) => fd.append('images', q.image || 'no image'));
   return admin.post('/tests', fd, {
@@ -66,6 +67,7 @@ export function updateTest(data) {
   fd.append('startsAt', data.startsAt);
   fd.append('submittableBefore', data.submittableBefore);
   fd.append('isDemo', data.isDemo === 'true');
+  fd.append('price', data.price);
   fd.append('questions', JSON.stringify(data.questions));
   data.questions.forEach((q) => typeof q.image === 'object' && fd.append('images', q.image));
   return admin.post('/tests/update', fd, {

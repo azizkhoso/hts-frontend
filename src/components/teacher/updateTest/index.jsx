@@ -63,6 +63,7 @@ export default function UpdateTest() {
       .min(new Date(), 'Test cannot be uploaded after end time')
       .required('End time is required'),
     isDemo: yup.string(),
+    price: yup.number().default(0),
     questions: yup.array().min(3, 'The test should have at least 3 questions'),
   });
   const formik = useFormik({
@@ -72,6 +73,7 @@ export default function UpdateTest() {
       startsAt: new Date(),
       submittableBefore: new Date(),
       isDemo: 'false',
+      price: 0,
       questions: [],
     },
     validationSchema: schema,
@@ -273,6 +275,27 @@ export default function UpdateTest() {
                 <MenuItem value="true">Yes</MenuItem>
                 <MenuItem value="false">No</MenuItem>
               </Select>
+            </td>
+          </tr>
+          <tr className="flex flex-col justify-between w-full lg:w-2/3 2xl:w-2/6 md:flex-row">
+            <td className="min-w-fit">
+              <Typography variant="h6" color="primary">
+                Price (Rs) {(formik.values.price === 0 ?  <span style={{fontSize: 11, color: 'green'}}>(Free)</span> : '')}:
+              </Typography>
+            </td>
+            <td className="flex justify-start w-full sm:w-60">
+              <TextField
+                type="number"
+                variant="outlined"
+                placeholder="Price"
+                size="small"
+                className="w-full sm:w-60"
+                name="price"
+                onChange={formik.handleChange}
+                value={formik.values.price}
+                error={formik.touched.price && formik.errors.price}
+                helperText={formik.touched && formik.errors.price}
+              />
             </td>
           </tr>
           <tr className="flex flex-col justify-between w-full lg:w-2/3 2xl:w-2/6 md:flex-row">
