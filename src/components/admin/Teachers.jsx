@@ -17,6 +17,8 @@ import {
   TableHead,
   TableRow,
   Typography,
+  CircularProgress,
+  Pagination,
 } from '@mui/material';
 
 import {
@@ -25,9 +27,23 @@ import {
   Add,
 } from '@mui/icons-material';
 import NewTeacher from './NewTeacher';
+import { useQuery } from 'react-query';
+import { Case, Default, Switch } from 'react-if';
+import { getTeachers } from '../../api/admin/teachers';
+import { addErrorToast } from '../../redux/actions/toasts';
 
 export default function Teachers() {
   const navigate = useNavigate();
+  const [page, setPage] = React.useState(1);
+  const [teachers, setTeachers] = React.useState([]);
+  const { isLoading } = useQuery(['admin-teachers', page], () => getTeachers('', page), {
+    onSuccess: (data) => {
+      setTeachers(data.data.teachers);
+    },
+    onError: (err) => {
+      addErrorToast({ message: err.response?.data?.error || err.message });
+    },
+  });
   return (
     <Routes>
       <Route
@@ -49,28 +65,52 @@ export default function Teachers() {
                     <TableCell align="center">Action</TableCell>
                   </TableRow>
                 </TableHead>
-                <TableBody>
-                  {
-                    [].map((teacher, index) => (
-                      <TableRow key={teacher.id}>
-                        <TableCell>{index}</TableCell>
-                        <TableCell>{teacher.fullName}</TableCell>
-                        <TableCell>{teacher.subjects.join(',')}</TableCell>
-                        <TableCell align="center">{teacher.subject}</TableCell>
-                        <TableCell align="center">
-                          <IconButton onClick={() => navigate(`update/${teacher.id}`)}>
-                            <Edit />
-                          </IconButton>
-                          <IconButton>
-                            <Delete />
-                          </IconButton>
+                {/* Loading state, no records state, and all rows, switch from 'react-if' */}
+                <Switch>
+                  <Case condition={isLoading}>
+                    <TableBody>
+                      <TableRow>
+                        <TableCell colSpan={5} align="center">
+                          <CircularProgress size={24} />
                         </TableCell>
                       </TableRow>
-                    ))
-                  }
-                </TableBody>
+                    </TableBody>
+                  </Case>
+                  <Case condition={teachers.length === 0 && !isLoading}>
+                    <TableBody>
+                      <TableRow>
+                        <TableCell colSpan={5} align="center">
+                          <Typography variant="body1">No records found</Typography>
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Case>
+                  <Default>
+                    <TableBody>
+                      {
+                        teachers.map((teacher, index) => (
+                          <TableRow key={teacher.id}>
+                            <TableCell>{index + 1}</TableCell>
+                            <TableCell>{teacher.fullName}</TableCell>
+                            <TableCell align="center">{teacher.email}</TableCell>
+                            <TableCell>{teacher.subjects.join(',')}</TableCell>
+                            <TableCell align="center">
+                              <IconButton onClick={() => navigate(`update/${teacher.id}`)}>
+                                <Edit />
+                              </IconButton>
+                              <IconButton>
+                                <Delete />
+                              </IconButton>
+                            </TableCell>
+                          </TableRow>
+                        ))
+                      }
+                    </TableBody>
+                  </Default>
+                </Switch>
               </Table>
             </TableContainer>
+            <Pagination className='mx-auto' count={10} page={page} onChange={(e, p) => setPage(p)}  />
           </div>
         )}
       />
