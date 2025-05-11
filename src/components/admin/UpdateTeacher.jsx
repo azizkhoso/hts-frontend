@@ -5,32 +5,29 @@ import {
   Grid,
   TextField,
   Button,
-  Select,
-  MenuItem,
-  Switch,
   CircularProgress,
 } from '@mui/material';
 
 import {
-  Add,
+  Edit,
 } from '@mui/icons-material';
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { Else, If, Then } from 'react-if';
-import { useMutation, useQueryClient } from 'react-query';
-import { addTeacher } from '../../api/admin/teachers';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { updateTeacher } from '../../api/admin/teachers';
 import { addErrorToast } from '../../redux/actions/toasts';
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { getTeacherById } from '../../api/admin/teachers';
 
-const subjects = ['English', 'Math', 'Physics', 'Chemistery', 'Biology', 'MDCAT', 'ECAT', 'STS IBA', 'NTS', 'SPSC'];
-
-export default function NewTeacher() {
+export default function UpdateTeacher() {
   const dispatch = useDispatch();
+  const { id } = useParams();
   // mutation react query
   const queryClient = useQueryClient();
-  const { isLoading, mutate } = useMutation({
-    mutationFn: (data) => addTeacher(data),
+  const updateMutation = useMutation({
+    mutationFn: (data) => updateTeacher(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries('admin-teachers');
       window.history.back();
@@ -59,7 +56,14 @@ export default function NewTeacher() {
       subjects: [],
     },
     validationSchema: schema,
-    onSubmit: (values) => mutate(values),
+    onSubmit: (values) => updateMutation.mutate(values),
+  });
+  const { isLoading } = useQuery(['test', id], () => getTeacherById(id), {
+    onSuccess: ({ data }) => {
+      formik.setValues(data.teacher);
+    },
+    onError: (err) =>
+      dispatch(addErrorToast({ message: err?.response?.data.error || err.message })),
   });
   // -----------------
   return (
@@ -68,7 +72,7 @@ export default function NewTeacher() {
       <Button variant="outlined" sx={{ alignSelf: 'flex-start' }} onClick={() => window.history.back()}>
         &lt; Back
       </Button>
-      <Typography variant="h6" align="center">New Teacher</Typography>
+      <Typography variant="h6" align="center">Update Teacher</Typography>
       <Grid container direction="column" rowSpacing={3} maxWidth="md">
         <Grid item container component="form" onSubmit={formik.handleSubmit} xs={12} lg={8} alignItems="center" rowSpacing={1}>
           <Grid item xs={4} md={4} lg={3}><Typography variant="body1">Full Name</Typography></Grid>
@@ -150,7 +154,7 @@ export default function NewTeacher() {
           </Grid>
           <Grid item xs={12} className="flex items-center justify-center">
             <Button type="submit" variant="outlined" disabled={isLoading}>
-                {isLoading ? <CircularProgress size={24} /> : <><Add /> Add</>}
+                {isLoading ? <CircularProgress size={24} /> : <><Edit /> Update</>}
             </Button>
           </Grid>
         </Grid>

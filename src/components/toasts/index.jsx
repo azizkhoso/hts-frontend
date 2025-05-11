@@ -11,6 +11,7 @@ import Toast from './Toast';
 export default function Toasts() {
   const dispatch = useDispatch();
   const toasts = useSelector((state) => state.toasts);
+  console.log({ toasts });
   return (
     <Stack>
       {toasts.map((toast) => {

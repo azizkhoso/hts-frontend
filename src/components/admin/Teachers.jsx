@@ -31,8 +31,11 @@ import { useQuery } from 'react-query';
 import { Case, Default, Switch } from 'react-if';
 import { getTeachers } from '../../api/admin/teachers';
 import { addErrorToast } from '../../redux/actions/toasts';
+import { useDispatch } from 'react-redux';
+import UpdateTeacher from './UpdateTeacher';
 
 export default function Teachers() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [page, setPage] = React.useState(1);
   const [teachers, setTeachers] = React.useState([]);
@@ -41,7 +44,7 @@ export default function Teachers() {
       setTeachers(data.data.teachers);
     },
     onError: (err) => {
-      addErrorToast({ message: err.response?.data?.error || err.message });
+      dispatch(addErrorToast({ message: err.response?.data?.error || err.message }));
     },
   });
   return (
@@ -89,13 +92,13 @@ export default function Teachers() {
                     <TableBody>
                       {
                         teachers.map((teacher, index) => (
-                          <TableRow key={teacher.id}>
+                          <TableRow key={teacher._id}>
                             <TableCell>{index + 1}</TableCell>
                             <TableCell>{teacher.fullName}</TableCell>
                             <TableCell align="center">{teacher.email}</TableCell>
                             <TableCell>{teacher.subjects.join(',')}</TableCell>
                             <TableCell align="center">
-                              <IconButton onClick={() => navigate(`update/${teacher.id}`)}>
+                              <IconButton onClick={() => navigate(`update/${teacher._id}`)}>
                                 <Edit />
                               </IconButton>
                               <IconButton>
@@ -115,7 +118,7 @@ export default function Teachers() {
         )}
       />
       <Route path="/new-teacher" element={<NewTeacher />} />
-      <Route path="/update/:id" element={<h1>Update teacher</h1>} />
+      <Route path="/update/:id" element={<UpdateTeacher />} />
       <Route path="/:id" element={<h1>View Teacher</h1>} />
     </Routes>
   );
