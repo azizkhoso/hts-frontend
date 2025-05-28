@@ -18,7 +18,7 @@ import Toasts from '../toasts';
 import NotFound from '../NotFound';
 import Results from '../Results';
 import Student from '../student';
-/* import Teacher from '../teacher'; */
+import Teacher from '../teacher';
 
 import ErrorBoundary from '../ErrorBoundary';
 import Footer from '../footer';
@@ -134,7 +134,7 @@ export default function AppRoutes() {
                   </Suspense>
                 )}
               />
-              { /* <Route path="/teacher/*" element={<Teacher />} /> */}
+              <Route path="/teacher/*" element={<Teacher />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
             <Footer />

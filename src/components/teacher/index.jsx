@@ -15,7 +15,7 @@ import {
 import { useSelector } from 'react-redux';
 
 import Sidebar from './sidebar';
-import Tests from './Tests';
+import Tests from '../admin/Tests';
 import Profile from './Profile';
 
 export default function Teacher() {
@@ -30,7 +30,7 @@ export default function Teacher() {
           <IconButton className="block md:hidden" onClick={() => setOpenDrawer(true)}>
             <Menu />
           </IconButton>
-          <Typography variant="h5" className="flex items-center justify-center flex-grow">Teacher Name</Typography>
+          <Typography variant="h5" className="flex items-center justify-center flex-grow">{account.teacher.fullName}</Typography>
           <IconButton>
             <Logout />
           </IconButton>

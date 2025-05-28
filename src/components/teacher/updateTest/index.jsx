@@ -27,7 +27,7 @@ import * as yup from 'yup';
 
 import { useDispatch } from 'react-redux';
 
-import { useQuery, useMutation } from 'react-query';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { getTest, updateTest } from '../../../api/admin';
 import { addErrorToast, addSuccessToast } from '../../../redux/actions/toasts';
 
@@ -46,9 +46,11 @@ export default function UpdateTest() {
   const { _id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const client = useQueryClient();
   const updateMutation = useMutation((values) => updateTest({ ...values, _id }), {
     onSuccess: () => {
       dispatch(addSuccessToast({ message: 'Test updated successfully' }));
+      client.invalidateQueries('tests');
       navigate('../../tests');
     },
     onError: (err) =>

@@ -15,6 +15,7 @@ import {
   TableRow,
   Typography,
   CircularProgress,
+  Pagination,
 } from '@mui/material';
 
 import { Edit, Delete, Add } from '@mui/icons-material';
@@ -35,8 +36,14 @@ export default function Tests() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [tests, setTests] = React.useState([]);
+  const [total, setTotal] = React.useState(0);
+  const [page, setPage] = React.useState(0);
   const { isLoading, refetch } = useQuery('tests', getTests, {
-    onSuccess: ({ data }) => setTests(data.tests),
+    refetchOnMount: true,
+    onSuccess: ({ data }) => {
+      setTests(data.tests);
+      setTotal(data.total);
+    },
     onError: (err) =>
       dispatch(addErrorToast({ message: err.response?.data?.error || err.message })),
   });
@@ -129,6 +136,7 @@ export default function Tests() {
                 </TableBody>
               </Table>
             </TableContainer>
+            <Pagination className='mx-auto' count={Math.ceil(total / 10)} page={page} onChange={(e, p) => setPage(p)}  />
           </div>
         }
       />
