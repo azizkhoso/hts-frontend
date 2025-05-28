@@ -7,7 +7,7 @@ import { useMutation } from 'react-query';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from '../../redux/actions/account';
@@ -19,7 +19,7 @@ import { addErrorToast } from '../../redux/actions/toasts';
 
 export default function StudentLogin() {
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const student = useSelector((state) => state.account.student);
   const { isLoading, mutate } = useMutation((values) => loginStudent(values), {
     onSuccess: ({ data }) => {
@@ -50,12 +50,10 @@ export default function StudentLogin() {
   return (
     <Card elevation={3} className="w-full pb-6 my-6">
       <Stack spacing={2}>
-        {/* <div className="flex">
-          <Button variant="outlined" className="flex-grow"
-          onClick={() => navigate('/login/teacher')}>Teacher</Button>
-          <Button variant="outlined" className="flex-grow"
-          onClick={() => navigate('/login/student')}>Student</Button>
-        </div> */}
+        <div className="flex">
+          <Button variant="outlined" className="flex-grow" onClick={() => navigate('/login/teacher')}>Teacher</Button>
+          <Button variant="contained" className="flex-grow" onClick={() => navigate('/login/student')}>Student</Button>
+        </div>
         <Typography variant="h5" align="center">
           Welcome Back
         </Typography>
