@@ -15,7 +15,7 @@ import {
 import { useSelector } from 'react-redux';
 
 import Sidebar from './sidebar';
-import Tests from '../admin/Tests';
+import Tests from './Tests';
 import Profile from './Profile';
 
 export default function Teacher() {

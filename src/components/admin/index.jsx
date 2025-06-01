@@ -15,7 +15,7 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 
 import Sidebar from './sidebar';
-import Tests from './Tests';
+import Tests from '../teacher/Tests';
 import Students from './Students';
 import Teachers from './Teachers';
 import Announcements from './Announcements';

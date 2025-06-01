@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 
 import { Routes, Route, useNavigate } from 'react-router-dom';
@@ -13,29 +14,70 @@ import {
   TableHead,
   TableRow,
   Typography,
+  CircularProgress,
+  Pagination,
 } from '@mui/material';
 
 import { Edit, Delete, Add } from '@mui/icons-material';
 
+import date from 'date-and-time';
+
+import { useQuery, useMutation } from 'react-query';
+
+import { useDispatch } from 'react-redux';
+import { getTests, deleteTest } from '../../api/admin';
+import { addErrorToast, addSuccessToast } from '../../redux/actions/toasts';
+
 import NewTest from './newTest';
 import UpdateTest from './updateTest';
+import Submissions from './Submissions';
 
 export default function Tests() {
   const navigate = useNavigate();
-  const [tests, setTests] = React.useState([
-    {
-      id: 'e1',
-      title: 'English Test 1',
-      subject: 'English',
-      duration: 180, // seconds
-      startsAt: Number(new Date()) + 10000000000,
-      teacher: {
-        id: 't1',
-        name: 'Teacher 1',
-      },
-      questions: [],
+  const dispatch = useDispatch();
+  const [tests, setTests] = React.useState([]);
+  const [total, setTotal] = React.useState(0);
+  const [page, setPage] = React.useState(0);
+  const { isLoading, refetch } = useQuery('tests', getTests, {
+    refetchOnMount: true,
+    onSuccess: ({ data }) => {
+      setTests(data.tests);
+      setTotal(data.total);
     },
-  ]);
+    onError: (err) =>
+      dispatch(addErrorToast({ message: err.response?.data?.error || err.message })),
+  });
+  const deleteMutation = useMutation((_id) => deleteTest(_id), {
+    onSuccess: ({ data }) => {
+      dispatch(addSuccessToast({ message: `${data.test.title} deleted successfully` }));
+      refetch();
+    },
+    onError: (err) =>
+      dispatch(addErrorToast({ message: err.response?.data?.error || err.message })),
+  });
+  function handleDeleteTest(_id) {
+    const test = tests.find((t) => t._id === _id);
+    const now = new Date();
+    const startsAt = new Date(test.startsAt);
+    const submittableBefore = new Date(test.submittableBefore);
+    if (
+      date.subtract(submittableBefore, now).toSeconds() > 0 &&
+      date.subtract(now, startsAt).toSeconds() > 0
+    ) {
+      dispatch(addErrorToast({ message: 'Can not delete test while it is active' }));
+    } else {
+      deleteMutation.mutate(_id);
+    }
+  }
+  React.useEffect(() => {
+    refetch();
+  }, []);
+  if (isLoading)
+    return (
+      <div className="relative inset-0 flex items-center justify-center w-full h-full">
+        <CircularProgress />
+      </div>
+    );
   return (
     <Routes>
       <Route
@@ -58,24 +100,35 @@ export default function Tests() {
                     <TableCell>Test Title</TableCell>
                     <TableCell align="center">Subject</TableCell>
                     <TableCell align="center">Starts At</TableCell>
+                    <TableCell align="center">Price</TableCell>
+                    <TableCell align="center">Submittable Before</TableCell>
                     <TableCell align="center">Action</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {tests.map((test, index) => (
-                    <TableRow key={test.id}>
+                    <TableRow key={test._id}>
                       <TableCell>{index}</TableCell>
                       <TableCell>{test.title}</TableCell>
                       <TableCell align="center">{test.subject}</TableCell>
                       <TableCell align="center" style={{ minWidth: '100px' }}>
-                        {new Date(test.startsAt).toDateString()}
+                        {date.format(new Date(test.startsAt), 'DD-MMM-YYYY hh:mm A')}
+                      </TableCell>
+                      <TableCell align="center" style={{ minWidth: '100px' }}>
+                        {test.price === 0 ? 'Free' : test.price}
+                      </TableCell>
+                      <TableCell align="center" style={{ minWidth: '100px' }}>
+                        {date.format(new Date(test.submittableBefore), 'DD-MMM-YYYY hh:mm A')}
                       </TableCell>
                       <TableCell align="center">
-                        <IconButton onClick={() => navigate(`update/${test.id}`)}>
+                        <IconButton onClick={() => navigate(`update/${test._id}`)}>
                           <Edit />
                         </IconButton>
-                        <IconButton>
+                        <IconButton onClick={() => handleDeleteTest(test._id)}>
                           <Delete />
+                        </IconButton>
+                        <IconButton onClick={() => navigate(`submissions/${test._id}`)}>
+                          Result
                         </IconButton>
                       </TableCell>
                     </TableRow>
@@ -83,12 +136,14 @@ export default function Tests() {
                 </TableBody>
               </Table>
             </TableContainer>
+            <Pagination className='mx-auto' count={Math.ceil(total / 10)} page={page} onChange={(e, p) => setPage(p)}  />
           </div>
         }
       />
       <Route path="/new-test" setTests={setTests} element={<NewTest />} />
-      <Route path="/update/:id" setTests={setTests} element={<UpdateTest test={tests[0]} />} />
+      <Route path="/update/:_id" setTests={setTests} element={<UpdateTest />} />
       <Route path="/:id" element={<h1>View Test</h1>} />
+      <Route path="/submissions/:testId/*" element={<Submissions />} />
     </Routes>
   );
 }
